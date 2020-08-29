@@ -10,11 +10,12 @@ using System.Windows.Forms;
 
 namespace TestCreationPlatform
 {
-    public partial class Form1 : Form
+    public partial class GreetingForm : Form
     {
-        public Form1()
+        public GreetingForm()
         {
             InitializeComponent();
         }
+
     }
 }
