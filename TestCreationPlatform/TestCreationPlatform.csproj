@@ -128,5 +128,8 @@
   <ItemGroup>
     <None Include="Resources\quiz.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Tests_DB_9-7-2020.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
