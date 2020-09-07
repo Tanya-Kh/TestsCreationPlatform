@@ -39,7 +39,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(71, 39);
+            this.label1.Location = new System.Drawing.Point(180, 39);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(54, 17);
             this.label1.TabIndex = 0;
@@ -83,8 +83,9 @@
             // 
             // txtResults
             // 
-            this.txtResults.Location = new System.Drawing.Point(64, 389);
+            this.txtResults.Location = new System.Drawing.Point(64, 398);
             this.txtResults.Name = "txtResults";
+            this.txtResults.ReadOnly = true;
             this.txtResults.Size = new System.Drawing.Size(658, 22);
             this.txtResults.TabIndex = 5;
             // 
