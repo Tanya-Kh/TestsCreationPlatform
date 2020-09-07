@@ -16,7 +16,7 @@ namespace TestCreationPlatform
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CreateQuestion());
+            Application.Run(new GreetingForm());
         }
     }
 }

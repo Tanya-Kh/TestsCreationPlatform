@@ -52,6 +52,12 @@
     <Compile Include="CreateQuestion.Designer.cs">
       <DependentUpon>CreateQuestion.cs</DependentUpon>
     </Compile>
+    <Compile Include="CreateTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateTest.Designer.cs">
+      <DependentUpon>CreateTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="GreetingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -80,6 +86,9 @@
     </Compile>
     <EmbeddedResource Include="CreateQuestion.resx">
       <DependentUpon>CreateQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateTest.resx">
+      <DependentUpon>CreateTest.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GreetingForm.resx">
       <DependentUpon>GreetingForm.cs</DependentUpon>
@@ -116,7 +125,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="Resources\quiz.jpg" />
   </ItemGroup>
