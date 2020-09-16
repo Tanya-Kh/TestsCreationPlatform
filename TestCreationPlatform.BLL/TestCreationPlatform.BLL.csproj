@@ -49,9 +49,18 @@
     <Compile Include="Models\TopicModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Implementations\AnswerService.cs" />
+    <Compile Include="Services\Implementations\QuestionService.cs" />
+    <Compile Include="Services\Implementations\QuestionTypeService.cs" />
+    <Compile Include="Services\Implementations\TestService.cs" />
+    <Compile Include="Services\Implementations\TestsResultService.cs" />
+    <Compile Include="Services\Implementations\TopicService.cs" />
     <Compile Include="Services\Interfaces\IAnswerService.cs" />
+    <Compile Include="Services\Interfaces\IQuestionTypeService.cs" />
     <Compile Include="Services\Interfaces\IService.cs" />
     <Compile Include="Services\Interfaces\IQuestionService.cs" />
+    <Compile Include="Services\Interfaces\ITestService.cs" />
+    <Compile Include="Services\Interfaces\ITestsResultService.cs" />
+    <Compile Include="Services\Interfaces\ITopicService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TestCreationPlatform.DAL\TestCreationPlatform.DAL.csproj">
