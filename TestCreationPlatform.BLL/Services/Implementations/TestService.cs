@@ -11,7 +11,7 @@ using TestCreationPlatform.DAL.Repositories.Interfaces;
 
 namespace TestCreationPlatform.BLL.Services.Implementations
 {
-    class TestService : ITestService
+   public class TestService : ITestService
     {
         private IGenericRepository<Test> _testRepository;
 
@@ -48,7 +48,14 @@ namespace TestCreationPlatform.BLL.Services.Implementations
 
         public IEnumerable<TestModel> GetAll()
         {
-            return _testRepository.GetAll().Select(test => ConvertTestToTestModel(test)).AsEnumerable();
+            //return _testRepository.GetAll().Select(test => new TestModel { TestName = test.TestName,
+            //    TestDescription = test.TestDescription,
+            //    TopicID = test.TopicID,
+            //    TestTime = test.TestTime,
+            //    TestID = test.TestID
+            //}).AsEnumerable();
+
+            return _testRepository.GetAll().AsEnumerable().Select(test => ConvertTestToTestModel(test));
         }
 
         public TestModel GetItem(int id)
@@ -92,15 +99,14 @@ namespace TestCreationPlatform.BLL.Services.Implementations
 
         private static TestModel ConvertTestToTestModel(Test test)
         {
-            TestModel testModel = new TestModel()
+            return new TestModel()
             {
                 TestName = test.TestName,
                 TestDescription = test.TestDescription,
                 TopicID = test.TopicID,
-                TestTime = test.TestTime
+                TestTime = test.TestTime,
+                TestID = test.TestID
             };
-
-            return testModel;
         }
     }
 }
