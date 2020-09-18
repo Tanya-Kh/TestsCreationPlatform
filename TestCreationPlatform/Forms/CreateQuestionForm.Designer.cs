@@ -1,6 +1,6 @@
 ﻿namespace TestCreationPlatform
 {
-    partial class CreateQuestion
+    partial class CreateQuestionForm
     {
         /// <summary>
         /// Required designer variable.
@@ -109,14 +109,14 @@
             // 
             this.txtIncorrectAnswer.Location = new System.Drawing.Point(208, 13);
             this.txtIncorrectAnswer.Name = "txtIncorrectAnswer";
-            this.txtIncorrectAnswer.Size = new System.Drawing.Size(375, 28);
+            this.txtIncorrectAnswer.Size = new System.Drawing.Size(375, 22);
             this.txtIncorrectAnswer.TabIndex = 8;
             // 
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(208, 61);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(375, 28);
+            this.textBox1.Size = new System.Drawing.Size(375, 22);
             this.textBox1.TabIndex = 10;
             // 
             // label4
@@ -148,7 +148,7 @@
             // 
             this.textBox2.Location = new System.Drawing.Point(208, 109);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(375, 28);
+            this.textBox2.Size = new System.Drawing.Size(375, 22);
             this.textBox2.TabIndex = 12;
             // 
             // label3
@@ -192,7 +192,7 @@
             this.btnFinish.Text = "Finish \r\nTest Creation";
             this.btnFinish.UseVisualStyleBackColor = true;
             // 
-            // CreateQuestion
+            // CreateQuestionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -207,7 +207,7 @@
             this.Controls.Add(this.rdoOpen);
             this.Controls.Add(this.txtQuestion);
             this.Controls.Add(this.label1);
-            this.Name = "CreateQuestion";
+            this.Name = "CreateQuestionForm";
             this.Text = "CreateQuestion";
             this.grpIncorrectAnswers.ResumeLayout(false);
             this.grpIncorrectAnswers.PerformLayout();

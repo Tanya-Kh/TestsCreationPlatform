@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace TestCreationPlatform
 {
-    public partial class CreateTest : Form
+    public partial class CreateTestForm : Form
     {
-        public CreateTest()
+        public CreateTestForm()
         {
             InitializeComponent();
         }

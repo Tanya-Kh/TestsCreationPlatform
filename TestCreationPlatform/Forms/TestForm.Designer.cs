@@ -1,6 +1,6 @@
 ﻿namespace TestCreationPlatform
 {
-    partial class PassTest
+    partial class TestForm
     {
         /// <summary>
         /// Required designer variable.
@@ -36,7 +36,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(320, 59);
+            this.label1.Location = new System.Drawing.Point(351, 60);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(135, 17);
             this.label1.TabIndex = 0;
@@ -46,9 +46,9 @@
             // 
             this.lstTests.FormattingEnabled = true;
             this.lstTests.ItemHeight = 16;
-            this.lstTests.Location = new System.Drawing.Point(323, 134);
+            this.lstTests.Location = new System.Drawing.Point(169, 163);
             this.lstTests.Name = "lstTests";
-            this.lstTests.Size = new System.Drawing.Size(120, 84);
+            this.lstTests.Size = new System.Drawing.Size(500, 36);
             this.lstTests.TabIndex = 1;
             // 
             // btnStart
@@ -60,7 +60,7 @@
             this.btnStart.Text = "Start";
             this.btnStart.UseVisualStyleBackColor = true;
             // 
-            // PassTest
+            // TestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -68,8 +68,10 @@
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.lstTests);
             this.Controls.Add(this.label1);
-            this.Name = "PassTest";
-            this.Text = "PassTest";
+            this.Name = "TestForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Tests";
+            this.Load += new System.EventHandler(this.TestForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

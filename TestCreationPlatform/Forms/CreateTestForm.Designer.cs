@@ -1,6 +1,6 @@
 ﻿namespace TestCreationPlatform
 {
-    partial class CreateTest
+    partial class CreateTestForm
     {
         /// <summary>
         /// Required designer variable.
@@ -110,11 +110,11 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(35, 328);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(348, 21);
+            this.label4.Size = new System.Drawing.Size(278, 17);
             this.label4.TabIndex = 11;
             this.label4.Text = "Please add a time to pass a test (optional):";
             // 
-            // CreateTest
+            // CreateTestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -128,7 +128,7 @@
             this.Controls.Add(this.cboTopics);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.label1);
-            this.Name = "CreateTest";
+            this.Name = "CreateTestForm";
             this.Text = "CreateTest";
             this.ResumeLayout(false);
             this.PerformLayout();
