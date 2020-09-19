@@ -52,7 +52,7 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(209, 223);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(424, 120);
+            this.label1.Size = new System.Drawing.Size(339, 96);
             this.label1.TabIndex = 2;
             this.label1.Text = "Hello! \r\nWelcome to the Test Platform.\r\nYou can create, edit or pass tests here. " +
     "\r\nPlease select below:";
@@ -62,7 +62,7 @@
             // 
             this.btnCreateTest.AutoSize = true;
             this.btnCreateTest.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCreateTest.Location = new System.Drawing.Point(111, 363);
+            this.btnCreateTest.Location = new System.Drawing.Point(30, 374);
             this.btnCreateTest.Name = "btnCreateTest";
             this.btnCreateTest.Size = new System.Drawing.Size(159, 43);
             this.btnCreateTest.TabIndex = 3;
@@ -73,23 +73,25 @@
             // 
             this.btnPassTest.AutoSize = true;
             this.btnPassTest.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPassTest.Location = new System.Drawing.Point(531, 363);
+            this.btnPassTest.Location = new System.Drawing.Point(620, 374);
             this.btnPassTest.Name = "btnPassTest";
             this.btnPassTest.Size = new System.Drawing.Size(128, 43);
             this.btnPassTest.TabIndex = 4;
             this.btnPassTest.Text = "Pass Test";
             this.btnPassTest.UseVisualStyleBackColor = true;
+            this.btnPassTest.Click += new System.EventHandler(this.btnStart_Click);
             // 
             // btnEditTest
             // 
             this.btnEditTest.AutoSize = true;
             this.btnEditTest.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEditTest.Location = new System.Drawing.Point(335, 363);
+            this.btnEditTest.Location = new System.Drawing.Point(298, 374);
             this.btnEditTest.Name = "btnEditTest";
-            this.btnEditTest.Size = new System.Drawing.Size(124, 43);
+            this.btnEditTest.Size = new System.Drawing.Size(210, 43);
             this.btnEditTest.TabIndex = 5;
-            this.btnEditTest.Text = "Edit Test";
+            this.btnEditTest.Text = "Edit/Delete Test";
             this.btnEditTest.UseVisualStyleBackColor = true;
+            this.btnEditTest.Click += new System.EventHandler(this.btnStart_Click);
             // 
             // GreetingForm
             // 

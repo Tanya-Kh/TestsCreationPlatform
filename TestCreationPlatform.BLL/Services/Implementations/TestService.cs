@@ -48,7 +48,9 @@ namespace TestCreationPlatform.BLL.Services.Implementations
 
         public IEnumerable<TestModel> GetAll()
         {
-            //return _testRepository.GetAll().Select(test => new TestModel { TestName = test.TestName,
+            //return _testRepository.GetAll().Select(test => new TestModel
+            //{
+            //    TestName = test.TestName,
             //    TestDescription = test.TestDescription,
             //    TopicID = test.TopicID,
             //    TestTime = test.TestTime,

@@ -30,7 +30,8 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.lstTests = new System.Windows.Forms.ListBox();
-            this.btnStart = new System.Windows.Forms.Button();
+            this.btnPassDelete = new System.Windows.Forms.Button();
+            this.btnEditTest = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -46,26 +47,37 @@
             // 
             this.lstTests.FormattingEnabled = true;
             this.lstTests.ItemHeight = 16;
-            this.lstTests.Location = new System.Drawing.Point(169, 163);
+            this.lstTests.Location = new System.Drawing.Point(169, 99);
             this.lstTests.Name = "lstTests";
-            this.lstTests.Size = new System.Drawing.Size(500, 36);
+            this.lstTests.Size = new System.Drawing.Size(502, 212);
             this.lstTests.TabIndex = 1;
             // 
-            // btnStart
+            // btnPassDelete
             // 
-            this.btnStart.Location = new System.Drawing.Point(368, 370);
-            this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(75, 23);
-            this.btnStart.TabIndex = 2;
-            this.btnStart.Text = "Start";
-            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnPassDelete.Location = new System.Drawing.Point(322, 377);
+            this.btnPassDelete.Name = "btnPassDelete";
+            this.btnPassDelete.Size = new System.Drawing.Size(188, 29);
+            this.btnPassDelete.TabIndex = 2;
+            this.btnPassDelete.UseVisualStyleBackColor = true;
+            this.btnPassDelete.Click += new System.EventHandler(this.btnPassDelete_Click);
+            // 
+            // btnEditTest
+            // 
+            this.btnEditTest.Location = new System.Drawing.Point(322, 332);
+            this.btnEditTest.Name = "btnEditTest";
+            this.btnEditTest.Size = new System.Drawing.Size(188, 29);
+            this.btnEditTest.TabIndex = 3;
+            this.btnEditTest.Text = "Edit Test";
+            this.btnEditTest.UseVisualStyleBackColor = true;
+            this.btnEditTest.Visible = false;
             // 
             // TestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.btnStart);
+            this.ClientSize = new System.Drawing.Size(804, 451);
+            this.Controls.Add(this.btnEditTest);
+            this.Controls.Add(this.btnPassDelete);
             this.Controls.Add(this.lstTests);
             this.Controls.Add(this.label1);
             this.Name = "TestForm";
@@ -81,6 +93,7 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListBox lstTests;
-        private System.Windows.Forms.Button btnStart;
+        private System.Windows.Forms.Button btnPassDelete;
+        private System.Windows.Forms.Button btnEditTest;
     }
 }
