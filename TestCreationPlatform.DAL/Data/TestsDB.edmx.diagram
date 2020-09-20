@@ -18,6 +18,7 @@
         <AssociationConnector Association="TestsModel.FK_Tests_Topics" ManuallyRouted="false" />
         <AssociationConnector Association="TestsModel.FK_TestsResults_Topics" ManuallyRouted="false" />
         <AssociationConnector Association="TestsModel.FK_Topics_Topics" ManuallyRouted="false" />
+        <AssociationConnector Association="TestsModel.FK_TestsResults_Tests" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
