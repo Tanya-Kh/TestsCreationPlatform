@@ -65,7 +65,9 @@ namespace TestCreationPlatform
                 {
                     case "Edit Test":
                         //case "Pass Test":
-                        GetTestQuestions(selected);
+                        QuestionsListForm questionList = new QuestionsListForm();
+                        questionList.Test = selected;
+                        questionList.ShowDialog();
                         Debug.WriteLine(buttonText);
                         break;
                     case "Delete Test":
@@ -81,17 +83,5 @@ namespace TestCreationPlatform
             MessageBox.Show($"{selected.TestName} test has been deleted.");
             ShowTests();
         }
-        private void GetTestQuestions(TestModel selected)
-        {
-            QuestionService question = new QuestionService();
-            List<QuestionModel> allQuestions = question.GetAll().ToList();
-            List<QuestionModel> testQuestions = allQuestions.Where(item => item.TestID == selected.TestID).ToList();
-            QuestionsListForm questionList = new QuestionsListForm();
-            questionList.Questions = testQuestions;
-            questionList.Test = selected;
-            questionList.ShowDialog();
-
-        }
-
     }
 }

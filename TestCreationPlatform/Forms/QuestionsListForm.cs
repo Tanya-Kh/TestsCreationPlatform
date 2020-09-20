@@ -15,7 +15,7 @@ namespace TestCreationPlatform.Forms
 {
     public partial class QuestionsListForm : Form
     {
-        public List<QuestionModel> Questions { get; set; }
+        private List<QuestionModel> Questions { get; set; }
         public TestModel Test { get; set; }
 
         public QuestionsListForm()
@@ -23,28 +23,36 @@ namespace TestCreationPlatform.Forms
             InitializeComponent();
         }
 
+        private List<QuestionModel> GetTestQuestions(TestModel selected)
+        {
+            QuestionService question = new QuestionService();
+            List<QuestionModel> allQuestions = question.GetAll().ToList();
+            List<QuestionModel> testQuestions = allQuestions.Where(item => item.TestID == selected.TestID).ToList();
+           
+            return testQuestions;
+        }
+
         private void QuestionsListForm_Load(object sender, EventArgs e)
         {
             DisplayTestInfo();
-            ShowQuestions(this.Questions);
+            ShowQuestions();
         }
 
         private void DisplayTestInfo()
         {
-            lblTestName.Text = this.Test.TestName;
-            lblDescription.Text = (this.Test.TestDescription == null) ? "No Description" : this.Test.TestDescription;
+            lblTestName.Text = Test.TestName;
+            lblDescription.Text = (Test.TestDescription == null) ? "No Description" : Test.TestDescription;
         }
 
-        private void ShowQuestions(List<QuestionModel> questions)
+        private void ShowQuestions()
         {
-            //QuestionService question = new QuestionService();
-            //var questions = question.GetAll().ToList();
+            Questions = GetTestQuestions(Test);
 
             lstQuestions.Items.Clear();
             lstQuestions.DisplayMember = "Question1";
             lstQuestions.ValueMember = "QuestionID";
 
-            foreach (QuestionModel item in questions)
+            foreach (QuestionModel item in Questions)
             {
                 lstQuestions.Items.Add(item);
             }
@@ -60,7 +68,7 @@ namespace TestCreationPlatform.Forms
             QuestionService question = new QuestionService();
             question.Delete(selectedQuestion.QuestionID);
             MessageBox.Show($"'{selectedQuestion.Question1}' question has been deleted.");
-            ShowQuestions(this.Questions);
+            ShowQuestions();
         }
 
         private void btnDeleteEditQuestion_Click(object sender, EventArgs e)
