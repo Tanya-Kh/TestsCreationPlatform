@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TestCreationPlatform.BLL.Models;
 using TestCreationPlatform.BLL.Services.Implementations;
+using TestCreationPlatform.Forms;
 
 namespace TestCreationPlatform
 {
@@ -20,12 +21,12 @@ namespace TestCreationPlatform
         public TestForm(string btn)
         {
             InitializeComponent();
-            btnPassDelete.Text = btn;
+            btnEditPass.Text = btn;
 
             if (btn != "Pass Test")
             {
-                btnPassDelete.Text = "Delete Test";
-                btnEditTest.Visible = true;
+                btnEditPass.Text = "Edit Test";
+                btnDeleteTest.Visible = true;
             }
         }
 
@@ -48,7 +49,7 @@ namespace TestCreationPlatform
             }
         }
 
-        private void btnPassDelete_Click(object sender, EventArgs e)
+        private void btnPassDeleteEdit_Click(object sender, EventArgs e)
         {
             string buttonText = (sender as Button).Text;
             TestModel selected = (TestModel)lstTests.SelectedItem;
@@ -62,16 +63,35 @@ namespace TestCreationPlatform
             {
                 switch (buttonText)
                 {
-                    //case "Start":
-                    //    Debug.WriteLine(buttonText);
-                    //    break;
+                    case "Edit Test":
+                        //case "Pass Test":
+                        GetTestQuestions(selected);
+                        Debug.WriteLine(buttonText);
+                        break;
                     case "Delete Test":
-                        test.Delete(selected.TestID);
-                        MessageBox.Show($"{selected.TestName} test has been deleted.");
-                        ShowTests();
+                        DeleteTest(selected);
                         break;
                 }
             }
         }
+
+        private void DeleteTest(TestModel selected)
+        {
+            test.Delete(selected.TestID);
+            MessageBox.Show($"{selected.TestName} test has been deleted.");
+            ShowTests();
+        }
+        private void GetTestQuestions(TestModel selected)
+        {
+            QuestionService question = new QuestionService();
+            List<QuestionModel> allQuestions = question.GetAll().ToList();
+            List<QuestionModel> testQuestions = allQuestions.Where(item => item.TestID == selected.TestID).ToList();
+            QuestionsListForm questionList = new QuestionsListForm();
+            questionList.Questions = testQuestions;
+            questionList.Test = selected;
+            questionList.ShowDialog();
+
+        }
+
     }
 }

@@ -47,7 +47,7 @@ namespace TestCreationPlatform.BLL.Services.Implementations
 
         public IEnumerable<QuestionModel> GetAll()
         {
-            return _questionRepository.GetAll().Select(answer => ConvertQuestionToQuestionModel(answer)).AsEnumerable();
+            return _questionRepository.GetAll().AsEnumerable().Select(answer => ConvertQuestionToQuestionModel(answer));
         }
 
         public QuestionModel GetItem(int id)
@@ -94,7 +94,8 @@ namespace TestCreationPlatform.BLL.Services.Implementations
             {
                 TestID = question.TestID,
                 Question1 = question.Question1,
-                Type = question.Type
+                Type = question.Type,
+                QuestionID = question.QuestionID
             };
 
             return questionModel;

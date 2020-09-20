@@ -74,6 +74,12 @@
     <Compile Include="Forms\GreetingForm.Designer.cs">
       <DependentUpon>GreetingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\QuestionsListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\QuestionsListForm.Designer.cs">
+      <DependentUpon>QuestionsListForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\TestForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,6 +108,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\GreetingForm.resx">
       <DependentUpon>GreetingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\QuestionsListForm.resx">
+      <DependentUpon>QuestionsListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TestForm.resx">
       <DependentUpon>TestForm.cs</DependentUpon>
