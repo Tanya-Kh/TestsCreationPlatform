@@ -7,24 +7,148 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TestCreationPlatform.BLL.Models;
+using TestCreationPlatform.BLL.Services.Implementations;
+using TestCreationPlatform.Forms;
 
 namespace TestCreationPlatform
 {
     public partial class CreateQuestionForm : Form
     {
+        public TestModel Test { get; set; }
+
+        public QuestionModel Question { get; set; }
+
+        public bool EditMode { get; set; }
+
         public CreateQuestionForm()
         {
             InitializeComponent();
         }
 
-        private void rdoClosed_CheckedChanged(object sender, EventArgs e)
+        private void CreateQuestionForm_Load(object sender, EventArgs e)
         {
+            DisplayQuestionInfo();
+            if (EditMode)
+            {
+                this.Text = "Edit Question";
+                btnNext.Text = "Save";
+                btnFinish.Visible = false;
+            }
+        }
 
+        private List<AnswerModel> GetAnswers()
+        {
+            AnswerService answer = new AnswerService();
+            List<AnswerModel> allAnswers = answer.GetAll().ToList();
+            List<AnswerModel> questionAnswers = allAnswers.Where(item => item.QuestionID == Question.QuestionID).ToList();
+            //Question.QuestionAnswers = questionAnswers;
+
+            return questionAnswers;
+        }
+        private void DisplayAnswers()
+        {
+            List<AnswerModel> answers = GetAnswers();
+            AnswerModel correctAnswer = answers.Where(item => item.IsCorrect == true).FirstOrDefault();
+            Question.CorrrectAnswer = correctAnswer;
+
+            ClearTextBoxes(grpIncorrectAnswers.Controls);
+            txtCorrectAnswer.Text = correctAnswer.Answer1;
+
+            if (answers.Count > 1)
+            {
+                List<AnswerModel> incorrectAnswers = answers.Where(item => item.IsCorrect == false).ToList();
+                txtIncorrect1.Text = incorrectAnswers[0].Answer1;
+                txtIncorrect2.Text = incorrectAnswers[1].Answer1;
+                txtIncorrect3.Text = incorrectAnswers[2].Answer1;
+                Question.IncorrectAnswer1 = incorrectAnswers[0];
+                Question.IncorrectAnswer2 = incorrectAnswers[1];
+                Question.IncorrectAnswer3 = incorrectAnswers[2];
+            }
+        }
+
+        private void ClearTextBoxes(Control.ControlCollection controls)
+        {
+            txtCorrectAnswer.Text = String.Empty;
+
+            foreach (Control ctrl in controls)
+            {
+                if (ctrl is TextBox)
+                {
+                    ctrl.Text = String.Empty;
+                }
+            }
+        }
+
+        private void DisplayQuestionInfo()
+        {
+            txtTestName.Text = Test.TestName;
+            txtQuestion.Text = Question.Question1;
+
+            if (Question.Type == 1)
+            {
+                rdoOpen.Checked = true;
+            }
+            else
+            {
+                rdoClosed.Checked = true;
+            }
+            DisplayAnswers();
         }
 
         private void rdoOpen_CheckedChanged(object sender, EventArgs e)
         {
-            grpIncorrectAnswers.Visible = false;
+            grpIncorrectAnswers.Visible = (rdoOpen.Checked) ? false : true;
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            DisplayQuestionInfo();
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            switch (btnNext.Text)
+            {
+                case "Save":
+                    UpdateQuestion();
+                    UpdateAnswers();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void UpdateQuestion()
+        {
+            QuestionService question = new QuestionService();
+
+            Question.Question1 = txtQuestion.Text;
+            Question.Type = (rdoOpen.Checked) ? 1 : 2;
+//FIX: DELETE INCORRECT ANSWERS IF OPEN QUESTION
+
+            question.Update(Question.QuestionID, Question);
+            MessageBox.Show($"Question has been updated.");
+            
+//FIX: UPDATE Questions List on QuestionListForm
+            //QuestionsListForm questionList = new QuestionsListForm();
+            //questionList.ShowQuestions();
+        }
+
+        private void UpdateAnswers()
+        {
+            Question.CorrrectAnswer.Answer1 = txtCorrectAnswer.Text;
+            Question.IncorrectAnswer1.Answer1 = txtIncorrect1.Text;
+            Question.IncorrectAnswer2.Answer1 = txtIncorrect2.Text;
+            Question.IncorrectAnswer3.Answer1 = txtIncorrect3.Text;
+
+            List<AnswerModel> answers = Question.GetAnswers();
+            AnswerService answer = new AnswerService();
+
+            foreach (var item in answers)
+            {
+                answer.Update(item.AnswerID, item);
+            }
         }
     }
 }

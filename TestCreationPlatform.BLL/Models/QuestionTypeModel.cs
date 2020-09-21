@@ -9,6 +9,7 @@ namespace TestCreationPlatform.BLL.Models
     public class QuestionTypeModel
     {
         public int TypeID { get; set; }
+
         public string TypeName { get; set; }
     }
 }

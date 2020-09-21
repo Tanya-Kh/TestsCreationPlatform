@@ -47,7 +47,7 @@ namespace TestCreationPlatform.BLL.Services.Implementations
 
         public IEnumerable<AnswerModel> GetAll()
         {
-            return _answerRepository.GetAll().Select(answer => ConvertAnswerToAnswerModel(answer)).AsEnumerable();
+            return _answerRepository.GetAll().AsEnumerable().Select(answer => ConvertAnswerToAnswerModel(answer));
         }
 
         public AnswerModel GetItem(int id)
@@ -82,7 +82,8 @@ namespace TestCreationPlatform.BLL.Services.Implementations
             {
                 Answer1 = answerModel.Answer1,
                 QuestionID = answerModel.QuestionID,
-                IsCorrect = answerModel.IsCorrect
+                IsCorrect = answerModel.IsCorrect,
+                AnswerID = answerModel.AnswerID
             };
 
             return answer;
@@ -94,7 +95,8 @@ namespace TestCreationPlatform.BLL.Services.Implementations
             {
                 Answer1 = answer.Answer1,
                 QuestionID = answer.QuestionID,
-                IsCorrect = answer.IsCorrect
+                IsCorrect = answer.IsCorrect,
+                AnswerID = answer.AnswerID
             };
 
             return answerModel;

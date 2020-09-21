@@ -44,7 +44,7 @@ namespace TestCreationPlatform.Forms
             lblDescription.Text = (Test.TestDescription == null) ? "No Description" : Test.TestDescription;
         }
 
-        private void ShowQuestions()
+        public void ShowQuestions()
         {
             Questions = GetTestQuestions(Test);
 
@@ -87,7 +87,11 @@ namespace TestCreationPlatform.Forms
                 {
                     case "Edit":
                         //case "Pass Test":
-                        Debug.WriteLine(buttonText);
+                        CreateQuestionForm editQuestion = new CreateQuestionForm();
+                        editQuestion.Test = Test;
+                        editQuestion.EditMode = true;
+                        editQuestion.Question = selectedQuestion;
+                        editQuestion.ShowDialog();
                         break;
                     case "Delete":
                         DeleteQuestion(selectedQuestion);

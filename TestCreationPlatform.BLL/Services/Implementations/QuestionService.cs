@@ -80,6 +80,7 @@ namespace TestCreationPlatform.BLL.Services.Implementations
         {
             Question question = new Question()
             {
+                QuestionID = questionModel.QuestionID,
                 TestID = questionModel.TestID,
                 Question1 = questionModel.Question1,
                 Type = questionModel.Type

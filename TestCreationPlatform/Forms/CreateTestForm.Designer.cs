@@ -95,7 +95,7 @@
             // 
             this.txtDescription.Location = new System.Drawing.Point(355, 274);
             this.txtDescription.Name = "txtDescription";
-            this.txtDescription.Size = new System.Drawing.Size(158, 22);
+            this.txtDescription.Size = new System.Drawing.Size(411, 22);
             this.txtDescription.TabIndex = 10;
             // 
             // textBox1
