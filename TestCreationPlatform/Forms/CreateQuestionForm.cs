@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using TestCreationPlatform.BLL.Models;
 using TestCreationPlatform.BLL.Services.Implementations;
 using TestCreationPlatform.Forms;
+using TestCreationPlatform.BLL;
 
 namespace TestCreationPlatform
 {
@@ -51,8 +52,9 @@ namespace TestCreationPlatform
             List<AnswerModel> answers = GetAnswers();
             AnswerModel correctAnswer = answers.Where(item => item.IsCorrect == true).FirstOrDefault();
             Question.CorrrectAnswer = correctAnswer;
-
-            ClearTextBoxes(grpIncorrectAnswers.Controls);
+            txtCorrectAnswer.Text = String.Empty;
+           
+            Helpers.ClearTextBoxes(grpIncorrectAnswers.Controls);
             txtCorrectAnswer.Text = correctAnswer.Answer1;
 
             if (answers.Count > 1)
@@ -67,18 +69,17 @@ namespace TestCreationPlatform
             }
         }
 
-        private void ClearTextBoxes(Control.ControlCollection controls)
-        {
-            txtCorrectAnswer.Text = String.Empty;
+        //private void ClearTextBoxes(Control.ControlCollection controls)
+        //{
 
-            foreach (Control ctrl in controls)
-            {
-                if (ctrl is TextBox)
-                {
-                    ctrl.Text = String.Empty;
-                }
-            }
-        }
+        //    foreach (Control ctrl in controls)
+        //    {
+        //        if (ctrl is TextBox)
+        //        {
+        //            ctrl.Text = String.Empty;
+        //        }
+        //    }
+        //}
 
         private void DisplayQuestionInfo()
         {
