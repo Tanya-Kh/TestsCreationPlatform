@@ -25,7 +25,14 @@ namespace TestCreationPlatform.BLL.Services.Implementations
 
             if (item != null)
             {
-                _questionRepository.Create(ConvertQuestionModelToQuestion(item));
+
+                _questionRepository.Create(new Question()
+                {
+                    TestID = item.TestID,
+                    Question1 = item.Question1,
+                    Type = item.Type
+                });
+
                 created = true;
             }
 
@@ -47,7 +54,23 @@ namespace TestCreationPlatform.BLL.Services.Implementations
 
         public IEnumerable<QuestionModel> GetAll()
         {
-            return _questionRepository.GetAll().AsEnumerable().Select(answer => ConvertQuestionToQuestionModel(answer));
+
+            return _questionRepository.GetAll().Select(question => new QuestionModel()
+            {
+                QuestionID = question.QuestionID,
+                TestID = question.TestID,
+                Question1 = question.Question1,
+                Type = question.Type
+            }).AsEnumerable();
+
+        }
+
+        public List<QuestionModel> GetTestQuestions(TestModel selected)
+        {
+            var allQuestions = GetAll().ToList();
+            var testQuestions = allQuestions.Where(item => item.TestID == selected.TestID).ToList();
+
+            return testQuestions;
         }
 
         public QuestionModel GetItem(int id)
@@ -55,7 +78,14 @@ namespace TestCreationPlatform.BLL.Services.Implementations
             if (id > 0)
             {
                 Question question = _questionRepository.GetItem(id);
-                return ConvertQuestionToQuestionModel(question);
+
+                return new QuestionModel()
+                {
+                    QuestionID = question.QuestionID,
+                    TestID = question.TestID,
+                    Question1 = question.Question1,
+                    Type = question.Type
+                };
             }
             else
             {
@@ -69,37 +99,17 @@ namespace TestCreationPlatform.BLL.Services.Implementations
 
             if (id > 0)
             {
-                _questionRepository.Update(id, ConvertQuestionModelToQuestion(item));
+                _questionRepository.Update(id, new Question()
+                {
+                    TestID = item.TestID,
+                    Question1 = item.Question1,
+                    Type = item.Type,
+                    QuestionID = item.QuestionID
+                });
                 updated = true;
             }
 
             return updated;
-        }
-
-        private static Question ConvertQuestionModelToQuestion(QuestionModel questionModel)
-        {
-            Question question = new Question()
-            {
-                QuestionID = questionModel.QuestionID,
-                TestID = questionModel.TestID,
-                Question1 = questionModel.Question1,
-                Type = questionModel.Type
-            };
-
-            return question;
-        }
-
-        private static QuestionModel ConvertQuestionToQuestionModel(Question question)
-        {
-            QuestionModel questionModel = new QuestionModel()
-            {
-                TestID = question.TestID,
-                Question1 = question.Question1,
-                Type = question.Type,
-                QuestionID = question.QuestionID
-            };
-
-            return questionModel;
         }
     }
 }
