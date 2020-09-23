@@ -60,6 +60,12 @@ namespace TestCreationPlatform.BLL.Services.Implementations
             }).AsEnumerable();
         }
 
+        public List<TopicModel> GetSubTopics(int id)
+        {
+            var topics =  GetAll();
+            return topics.Where(item => item.ParentTopicID == id).ToList();
+        }
+
         public TopicModel GetItem(int id)
         {
             if (id > 0)
