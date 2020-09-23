@@ -19,5 +19,16 @@ namespace TestCreationPlatform.BLL
                 }
             }
         }
+
+        public static void ClearComboBoxes(Control.ControlCollection controls)
+        {
+            foreach (Control ctrl in controls)
+            {
+                if (ctrl is ComboBox)
+                {
+                    ctrl.Text = String.Empty;
+                }
+            }
+        }
     }
 }
