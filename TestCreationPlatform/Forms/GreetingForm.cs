@@ -25,5 +25,11 @@ namespace TestCreationPlatform
             TestForm testForm = new TestForm(clickedBtn);
             testForm.Show();
         }
+
+        private void btnCreateTest_Click(object sender, EventArgs e)
+        {
+            CreateTestForm createTest = new CreateTestForm();
+            createTest.Show();
+        }
     }
 }

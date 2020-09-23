@@ -68,6 +68,7 @@
             this.btnCreateTest.TabIndex = 3;
             this.btnCreateTest.Text = "Create Test";
             this.btnCreateTest.UseVisualStyleBackColor = true;
+            this.btnCreateTest.Click += new System.EventHandler(this.btnCreateTest_Click);
             // 
             // btnPassTest
             // 
