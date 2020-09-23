@@ -11,7 +11,7 @@ using TestCreationPlatform.DAL.Repositories.Interfaces;
 
 namespace TestCreationPlatform.BLL.Services.Implementations
 {
-    class TopicService : ITopicService
+    public class TopicService : ITopicService
     {
         private IGenericRepository<Topic> _topicRepository;
 
@@ -26,7 +26,11 @@ namespace TestCreationPlatform.BLL.Services.Implementations
 
             if (item != null)
             {
-                _topicRepository.Create(ConvertTopicModelToTopic(item));
+                _topicRepository.Create(new Topic()
+                {
+                    ParentTopicID = item.ParentTopicID,
+                    TopicName = item.TopicName
+                });
                 created = true;
             }
 
@@ -48,7 +52,12 @@ namespace TestCreationPlatform.BLL.Services.Implementations
 
         public IEnumerable<TopicModel> GetAll()
         {
-            return _topicRepository.GetAll().Select(topic => ConvertTopicToTopicModel(topic)).AsEnumerable();
+            return _topicRepository.GetAll().Select(topic => new TopicModel()
+            {
+                ParentTopicID = topic.ParentTopicID,
+                TopicName = topic.TopicName,
+                TopicID = topic.TopicID
+            }).AsEnumerable();
         }
 
         public TopicModel GetItem(int id)
@@ -56,7 +65,13 @@ namespace TestCreationPlatform.BLL.Services.Implementations
             if (id > 0)
             {
                 Topic topic = _topicRepository.GetItem(id);
-                return ConvertTopicToTopicModel(topic);
+
+                return new TopicModel()
+                {
+                    ParentTopicID = topic.ParentTopicID,
+                    TopicName = topic.TopicName,
+                    TopicID = topic.TopicID
+                };
             }
             else
             {
@@ -70,33 +85,17 @@ namespace TestCreationPlatform.BLL.Services.Implementations
 
             if (id > 0)
             {
-                _topicRepository.Update(id, ConvertTopicModelToTopic(item));
+                _topicRepository.Update(id, new Topic()
+                {
+                    ParentTopicID = item.ParentTopicID,
+                    TopicName = item.TopicName,
+                    TopicID = item.TopicID
+                });
+
                 updated = true;
             }
 
             return updated;
-        }
-
-        private static Topic ConvertTopicModelToTopic(TopicModel topicModel)
-        {
-            Topic topic = new Topic()
-            {
-                ParentTopicID = topicModel.ParentTopicID,
-                TopicName = topicModel.TopicName
-            };
-
-            return topic;
-        }
-
-        private static TopicModel ConvertTopicToTopicModel(Topic topic)
-        {
-            TopicModel topicModel = new TopicModel()
-            {
-                ParentTopicID = topic.ParentTopicID,
-                TopicName = topic.TopicName
-            };
-
-            return topicModel;
         }
     }
 }

@@ -26,7 +26,13 @@ namespace TestCreationPlatform.BLL.Services.Implementations
 
             if (item != null)
             {
-                _testRepository.Create(ConvertTestModelToTest(item));
+                _testRepository.Create(new Test()
+                {
+                    TestName = item.TestName,
+                    TestDescription = item.TestDescription,
+                    TopicID = item.TopicID,
+                    TestTime = item.TestTime
+                });
                 created = true;
             }
 
@@ -48,16 +54,14 @@ namespace TestCreationPlatform.BLL.Services.Implementations
 
         public IEnumerable<TestModel> GetAll()
         {
-            //return _testRepository.GetAll().Select(test => new TestModel
-            //{
-            //    TestName = test.TestName,
-            //    TestDescription = test.TestDescription,
-            //    TopicID = test.TopicID,
-            //    TestTime = test.TestTime,
-            //    TestID = test.TestID
-            //}).AsEnumerable();
-
-            return _testRepository.GetAll().AsEnumerable().Select(test => ConvertTestToTestModel(test));
+            return _testRepository.GetAll().Select(test => new TestModel()
+            {
+                TestName = test.TestName,
+                TestDescription = test.TestDescription,
+                TopicID = test.TopicID,
+                TestTime = test.TestTime,
+                TestID = test.TestID
+            }).AsEnumerable();
         }
 
         public TestModel GetItem(int id)
@@ -65,7 +69,15 @@ namespace TestCreationPlatform.BLL.Services.Implementations
             if (id > 0)
             {
                 Test test = _testRepository.GetItem(id);
-                return ConvertTestToTestModel(test);
+
+                return new TestModel()
+                {
+                    TestName = test.TestName,
+                    TestDescription = test.TestDescription,
+                    TopicID = test.TopicID,
+                    TestTime = test.TestTime,
+                    TestID = test.TestID
+                };
             }
             else
             {
@@ -79,36 +91,18 @@ namespace TestCreationPlatform.BLL.Services.Implementations
 
             if (id > 0)
             {
-                _testRepository.Update(id, ConvertTestModelToTest(item));
+                _testRepository.Update(id, new Test()
+            {
+                TestName = item.TestName,
+                TestDescription = item.TestDescription,
+                TopicID = item.TopicID,
+                TestTime = item.TestTime,
+                TestID = item.TestID
+            });
                 updated = true;
             }
 
             return updated;
-        }
-
-        private static Test ConvertTestModelToTest(TestModel testModel)
-        {
-            Test test = new Test()
-            {
-                TestName = testModel.TestName,
-                TestDescription = testModel.TestDescription,
-                TopicID = testModel.TopicID,
-                TestTime = testModel.TestTime
-            };
-
-            return test;
-        }
-
-        private static TestModel ConvertTestToTestModel(Test test)
-        {
-            return new TestModel()
-            {
-                TestName = test.TestName,
-                TestDescription = test.TestDescription,
-                TopicID = test.TopicID,
-                TestTime = test.TestTime,
-                TestID = test.TestID
-            };
         }
     }
 }
