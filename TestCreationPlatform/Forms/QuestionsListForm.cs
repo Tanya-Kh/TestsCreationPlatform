@@ -23,14 +23,14 @@ namespace TestCreationPlatform.Forms
             InitializeComponent();
         }
 
-        private List<QuestionModel> GetTestQuestions(TestModel selected)
-        {
-            QuestionService question = new QuestionService();
-            List<QuestionModel> allQuestions = question.GetAll().ToList();
-            List<QuestionModel> testQuestions = allQuestions.Where(item => item.TestID == selected.TestID).ToList();
+        //private List<QuestionModel> GetTestQuestions(TestModel selected)
+        //{
+        //    QuestionService question = new QuestionService();
+        //    List<QuestionModel> allQuestions = question.GetAll().ToList();
+        //    List<QuestionModel> testQuestions = allQuestions.Where(item => item.TestID == selected.TestID).ToList();
            
-            return testQuestions;
-        }
+        //    return testQuestions;
+        //}
 
         private void QuestionsListForm_Load(object sender, EventArgs e)
         {
@@ -46,7 +46,8 @@ namespace TestCreationPlatform.Forms
 
         public void ShowQuestions()
         {
-            Questions = GetTestQuestions(Test);
+            QuestionService question = new QuestionService();
+            Questions = question.GetTestQuestions(Test);
 
             lstQuestions.Items.Clear();
             lstQuestions.DisplayMember = "Question1";
@@ -76,7 +77,6 @@ namespace TestCreationPlatform.Forms
             string buttonText = (sender as Button).Text;
             QuestionModel selectedQuestion = (QuestionModel)lstQuestions.SelectedItem;
 
-            //Debug.WriteLine(buttonText);
             if (selectedQuestion == null)
             {
                 MessageBox.Show("Please select a question.");

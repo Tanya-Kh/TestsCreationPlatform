@@ -18,6 +18,7 @@ namespace TestCreationPlatform
     public partial class CreateTestForm : Form
     {
         TopicService topic = new TopicService();
+
         public TopicModel Topic { get; set; }
 
         public TopicModel SubTopic { get; set; }
@@ -49,14 +50,18 @@ namespace TestCreationPlatform
 
         private void cboTopics_SelectedIndexChanged(object sender, EventArgs e)
         {
-            linkTopicDelete.Visible = true;
             Helpers.ClearTextBoxes(this.Controls);
             Helpers.ClearComboBoxes(this.Controls);
             TopicModel selectedTopic = (TopicModel)cboTopics.SelectedItem;
             Topic = selectedTopic;
             linkAddSubTopic.Visible = true;
             ShowTopics(cboSubTopics, Topic);
-            cboSubTopics.Enabled = true;
+
+            if (cboTopics.SelectedItem != null)
+            {
+                linkTopicDelete.Visible = true;
+                cboSubTopics.Enabled = true;
+            }
         }
 
         private void cboSubTopics_SelectedIndexChanged(object sender, EventArgs e)
@@ -64,46 +69,29 @@ namespace TestCreationPlatform
             TopicModel selectedSubTopic = (TopicModel)cboSubTopics.SelectedItem;
             SubTopic = selectedSubTopic;
             ShowTopics(cboSubSubTopics, SubTopic);
-            linkDeleteSubTopic.Visible = true;
-            linkAddSubSubTopic.Visible = true;
-            cboSubSubTopics.Enabled = true;
+
+            if (cboSubTopics.SelectedItem != null)
+            {
+                linkDeleteSubTopic.Visible = true;
+                linkAddSubSubTopic.Visible = true;
+                cboSubSubTopics.Enabled = true;
+            }
         }
 
         private void cboSubSubTopics_SelectedIndexChanged(object sender, EventArgs e)
         {
             TopicModel selectedSubSubTopic = (TopicModel)cboSubSubTopics.SelectedItem;
             SubSubTopic = selectedSubSubTopic;
-            linkDeleteSubSubTopic.Visible = true;
+
+            if (cboSubSubTopics.SelectedItem != null)
+            {
+                linkDeleteSubSubTopic.Visible = true;
+            }
         }
 
-        //private int GetTopicId()
-        //{
-        //    int topicID = 0;
-        //    if (cboTopics.SelectedItem != null)
-        //    {
-        //        topicID = ((TopicModel)cboTopics.SelectedItem).TopicID;
-        //    }
-        //    TopicModel selectedSubTopic = ((TopicModel)cboSubTopics.SelectedItem);
-        //    int subTopicID = selectedSubTopic == null ? 0 : ((TopicModel)cboSubTopics.SelectedItem).TopicID;
-        //    //int? subTopicID = ((TopicModel)cboSubTopics.SelectedItem).TopicID;
-
-        //    if (subTopicID != 0)
-        //    {
-        //        TopicModel selectedSubSubTopic = ((TopicModel)cboSubSubTopics.SelectedItem);
-        //        int subSubTopicID = selectedSubSubTopic == null ? 0 : ((TopicModel)cboSubSubTopics.SelectedItem).TopicID;
-
-        //        //int? subSubTopicID = ((TopicModel)cboSubSubTopics.SelectedItem).TopicID;
-
-        //        topicID = subSubTopicID == 0 ? (int)subTopicID : (int)subSubTopicID;
-        //    }
-        //    return topicID;
-        //    //Debug.WriteLine(topicID);
-        //}
-
-//TO DO refactor next method!
+        //TO DO refactor next method!
         private int GetTopicId()
         {
-
             int topicID = Topic.TopicID;
 
             if (SubTopic != null)
@@ -115,7 +103,7 @@ namespace TestCreationPlatform
                     topicID = SubSubTopic.TopicID;
                 }
             }
-            
+
             return topicID;
         }
 
@@ -142,7 +130,6 @@ namespace TestCreationPlatform
         private void linkTopicAdd_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             AddTopic();
-            //ShowTopics(cboTopics);
         }
 
         private void AddTopic(TopicModel parentTopic = null)
@@ -161,10 +148,8 @@ namespace TestCreationPlatform
 
         private void DeleteTopic(TopicModel selectedTopic)
         {
-            //var childTopics = topic.GetAll().Where(item => item.ParentTopicID == selectedTopic.TopicID).ToList();
-            //var childChildTopics = topic.GetAll().Where(item => item.ParentTopicID == selectedTopic.TopicID).ToList();
             var subTopics = topic.GetAll().Where(item => item.ParentTopicID == selectedTopic.TopicID).ToList();
-            //List<TopicModel> subSubTopics;
+
             foreach (var subTopic in subTopics)
             {
                 var subSubTopics = topic.GetAll().Where(item => item.ParentTopicID == subTopic.TopicID).ToList();
@@ -177,12 +162,12 @@ namespace TestCreationPlatform
             }
             topic.Delete(selectedTopic.TopicID);
             MessageBox.Show($"'{selectedTopic.TopicName}' topic has been deleted.");
-            //ShowTopics();
         }
 
         private void linkDeleteSubTopic_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             var subSubTopics = topic.GetAll().Where(item => item.ParentTopicID == SubTopic.TopicID).ToList();
+
             foreach (var item in subSubTopics)
             {
                 DeleteTopic(item);
@@ -212,6 +197,7 @@ namespace TestCreationPlatform
         private void cboTopics_DropDown(object sender, EventArgs e)
         {
             TopicModel topicModel = null;
+
             if ((ComboBox)sender == cboSubTopics)
             {
                 topicModel = Topic;
@@ -220,6 +206,7 @@ namespace TestCreationPlatform
             {
                 topicModel = SubTopic;
             }
+
             ShowTopics((ComboBox)sender, topicModel);
         }
 
