@@ -1,0 +1,486 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TestsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Answers">
+          <Key>
+            <PropertyRef Name="AnswerID" />
+          </Key>
+          <Property Name="AnswerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuestionID" Type="int" Nullable="false" />
+          <Property Name="AnswerText" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsCorrect" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Questions">
+          <Key>
+            <PropertyRef Name="QuestionID" />
+          </Key>
+          <Property Name="QuestionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TestID" Type="int" Nullable="false" />
+          <Property Name="QuestionText" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QuestionTypes">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Tests">
+          <Key>
+            <PropertyRef Name="TestID" />
+          </Key>
+          <Property Name="TestID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TestName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TestDescription" Type="nvarchar" MaxLength="50" />
+          <Property Name="TopicID" Type="int" Nullable="false" />
+          <Property Name="TestTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TestsResults">
+          <Key>
+            <PropertyRef Name="ResultID" />
+          </Key>
+          <Property Name="ResultID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TestID" Type="int" Nullable="false" />
+          <Property Name="CorrectAnswersTotal" Type="int" Nullable="false" />
+          <Property Name="QuestionsTotal" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Topics">
+          <Key>
+            <PropertyRef Name="TopicID" />
+          </Key>
+          <Property Name="TopicID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentTopicID" Type="int" />
+          <Property Name="TopicName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Answers_Questions">
+          <End Role="Questions" Type="Self.Questions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Answers" Type="Self.Answers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="QuestionID" />
+            </Principal>
+            <Dependent Role="Answers">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Questions_QuestionTypes1">
+          <End Role="QuestionTypes" Type="Self.QuestionTypes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Questions" Type="Self.Questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionTypes">
+              <PropertyRef Name="TypeID" />
+            </Principal>
+            <Dependent Role="Questions">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Questions_Tests">
+          <End Role="Tests" Type="Self.Tests" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Questions" Type="Self.Questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tests">
+              <PropertyRef Name="TestID" />
+            </Principal>
+            <Dependent Role="Questions">
+              <PropertyRef Name="TestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tests_Topics">
+          <End Role="Topics" Type="Self.Topics" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Tests" Type="Self.Tests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Topics">
+              <PropertyRef Name="TopicID" />
+            </Principal>
+            <Dependent Role="Tests">
+              <PropertyRef Name="TopicID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestsResults_Tests">
+          <End Role="Tests" Type="Self.Tests" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TestsResults" Type="Self.TestsResults" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tests">
+              <PropertyRef Name="TestID" />
+            </Principal>
+            <Dependent Role="TestsResults">
+              <PropertyRef Name="TestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Topics_Topics">
+          <End Role="Topics" Type="Self.Topics" Multiplicity="0..1" />
+          <End Role="Topics1" Type="Self.Topics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Topics">
+              <PropertyRef Name="TopicID" />
+            </Principal>
+            <Dependent Role="Topics1">
+              <PropertyRef Name="ParentTopicID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TestsModelStoreContainer">
+          <EntitySet Name="Answers" EntityType="Self.Answers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Questions" EntityType="Self.Questions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuestionTypes" EntityType="Self.QuestionTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tests" EntityType="Self.Tests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TestsResults" EntityType="Self.TestsResults" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Topics" EntityType="Self.Topics" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Answers_Questions" Association="Self.FK_Answers_Questions">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="Answers" EntitySet="Answers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Questions_QuestionTypes1" Association="Self.FK_Questions_QuestionTypes1">
+            <End Role="QuestionTypes" EntitySet="QuestionTypes" />
+            <End Role="Questions" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Questions_Tests" Association="Self.FK_Questions_Tests">
+            <End Role="Tests" EntitySet="Tests" />
+            <End Role="Questions" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tests_Topics" Association="Self.FK_Tests_Topics">
+            <End Role="Topics" EntitySet="Topics" />
+            <End Role="Tests" EntitySet="Tests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestsResults_Tests" Association="Self.FK_TestsResults_Tests">
+            <End Role="Tests" EntitySet="Tests" />
+            <End Role="TestsResults" EntitySet="TestsResults" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Topics_Topics" Association="Self.FK_Topics_Topics">
+            <End Role="Topics" EntitySet="Topics" />
+            <End Role="Topics1" EntitySet="Topics" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TestsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Answer">
+          <Key>
+            <PropertyRef Name="AnswerID" />
+          </Key>
+          <Property Name="AnswerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuestionID" Type="Int32" Nullable="false" />
+          <Property Name="AnswerText" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsCorrect" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Question" Relationship="Self.FK_Answers_Questions" FromRole="Answers" ToRole="Questions" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="QuestionID" />
+          </Key>
+          <Property Name="QuestionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TestID" Type="Int32" Nullable="false" />
+          <Property Name="QuestionText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Answers" Relationship="Self.FK_Answers_Questions" FromRole="Questions" ToRole="Answers" />
+          <NavigationProperty Name="QuestionType" Relationship="Self.FK_Questions_QuestionTypes1" FromRole="Questions" ToRole="QuestionTypes" />
+          <NavigationProperty Name="Test" Relationship="Self.FK_Questions_Tests" FromRole="Questions" ToRole="Tests" />
+        </EntityType>
+        <EntityType Name="QuestionType">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Questions" Relationship="Self.FK_Questions_QuestionTypes1" FromRole="QuestionTypes" ToRole="Questions" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Test">
+          <Key>
+            <PropertyRef Name="TestID" />
+          </Key>
+          <Property Name="TestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TestName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TestDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TopicID" Type="Int32" Nullable="false" />
+          <Property Name="TestTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Questions" Relationship="Self.FK_Questions_Tests" FromRole="Tests" ToRole="Questions" />
+          <NavigationProperty Name="Topic" Relationship="Self.FK_Tests_Topics" FromRole="Tests" ToRole="Topics" />
+          <NavigationProperty Name="TestsResults" Relationship="TestsModel.FK_TestsResults_Tests" FromRole="Test" ToRole="TestsResult" />
+        </EntityType>
+        <EntityType Name="TestsResult">
+          <Key>
+            <PropertyRef Name="ResultID" />
+          </Key>
+          <Property Name="ResultID" Type="Int32" Nullable="false" />
+          <Property Name="TestID" Type="Int32" Nullable="false" />
+          <Property Name="CorrectAnswersTotal" Type="Int32" Nullable="false" />
+          <Property Name="QuestionsTotal" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Topic" Relationship="Self.FK_TestsResults_Topics" FromRole="TestsResults" ToRole="Topics" />
+          <NavigationProperty Name="Test" Relationship="TestsModel.FK_TestsResults_Tests" FromRole="TestsResult" ToRole="Test" />
+        </EntityType>
+        <EntityType Name="Topic">
+          <Key>
+            <PropertyRef Name="TopicID" />
+          </Key>
+          <Property Name="TopicID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentTopicID" Type="Int32" />
+          <Property Name="TopicName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Tests" Relationship="Self.FK_Tests_Topics" FromRole="Topics" ToRole="Tests" />
+          <NavigationProperty Name="TestsResults" Relationship="Self.FK_TestsResults_Topics" FromRole="Topics" ToRole="TestsResults" />
+          <NavigationProperty Name="Topics1" Relationship="Self.FK_Topics_Topics" FromRole="Topics" ToRole="Topics1" />
+          <NavigationProperty Name="Topic1" Relationship="Self.FK_Topics_Topics" FromRole="Topics1" ToRole="Topics" />
+        </EntityType>
+        <Association Name="FK_Answers_Questions">
+          <End Role="Questions" Type="Self.Question" Multiplicity="1" />
+          <End Role="Answers" Type="Self.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="QuestionID" />
+            </Principal>
+            <Dependent Role="Answers">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Questions_QuestionTypes1">
+          <End Role="QuestionTypes" Type="Self.QuestionType" Multiplicity="1" />
+          <End Role="Questions" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionTypes">
+              <PropertyRef Name="TypeID" />
+            </Principal>
+            <Dependent Role="Questions">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Questions_Tests">
+          <End Role="Tests" Type="Self.Test" Multiplicity="1" />
+          <End Role="Questions" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tests">
+              <PropertyRef Name="TestID" />
+            </Principal>
+            <Dependent Role="Questions">
+              <PropertyRef Name="TestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tests_Topics">
+          <End Role="Topics" Type="Self.Topic" Multiplicity="1" />
+          <End Role="Tests" Type="Self.Test" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Topics">
+              <PropertyRef Name="TopicID" />
+            </Principal>
+            <Dependent Role="Tests">
+              <PropertyRef Name="TopicID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestsResults_Topics">
+          <End Role="Topics" Type="Self.Topic" Multiplicity="1" />
+          <End Role="TestsResults" Type="Self.TestsResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Topics">
+              <PropertyRef Name="TopicID" />
+            </Principal>
+            <Dependent Role="TestsResults">
+              <PropertyRef Name="TestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Topics_Topics">
+          <End Role="Topics" Type="Self.Topic" Multiplicity="0..1" />
+          <End Role="Topics1" Type="Self.Topic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Topics">
+              <PropertyRef Name="TopicID" />
+            </Principal>
+            <Dependent Role="Topics1">
+              <PropertyRef Name="ParentTopicID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TestsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Answers" EntityType="Self.Answer" />
+          <EntitySet Name="Questions" EntityType="Self.Question" />
+          <EntitySet Name="QuestionTypes" EntityType="Self.QuestionType" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Tests" EntityType="Self.Test" />
+          <EntitySet Name="TestsResults" EntityType="Self.TestsResult" />
+          <EntitySet Name="Topics" EntityType="Self.Topic" />
+          <AssociationSet Name="FK_Answers_Questions" Association="Self.FK_Answers_Questions">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="Answers" EntitySet="Answers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Questions_QuestionTypes1" Association="Self.FK_Questions_QuestionTypes1">
+            <End Role="QuestionTypes" EntitySet="QuestionTypes" />
+            <End Role="Questions" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Questions_Tests" Association="Self.FK_Questions_Tests">
+            <End Role="Tests" EntitySet="Tests" />
+            <End Role="Questions" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tests_Topics" Association="Self.FK_Tests_Topics">
+            <End Role="Topics" EntitySet="Topics" />
+            <End Role="Tests" EntitySet="Tests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestsResults_Topics" Association="Self.FK_TestsResults_Topics">
+            <End Role="Topics" EntitySet="Topics" />
+            <End Role="TestsResults" EntitySet="TestsResults" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Topics_Topics" Association="Self.FK_Topics_Topics">
+            <End Role="Topics" EntitySet="Topics" />
+            <End Role="Topics1" EntitySet="Topics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestsResults_Tests" Association="TestsModel.FK_TestsResults_Tests">
+            <End Role="Test" EntitySet="Tests" />
+            <End Role="TestsResult" EntitySet="TestsResults" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_TestsResults_Tests">
+          <End Type="TestsModel.Test" Role="Test" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="TestsModel.TestsResult" Role="TestsResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="TestID" />
+            </Principal>
+            <Dependent Role="TestsResult">
+              <PropertyRef Name="TestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TestsModelStoreContainer" CdmEntityContainer="TestsEntities">
+          <EntitySetMapping Name="Answers">
+            <EntityTypeMapping TypeName="TestsModel.Answer">
+              <MappingFragment StoreEntitySet="Answers">
+                <ScalarProperty Name="AnswerText" ColumnName="AnswerText" />
+                <ScalarProperty Name="AnswerID" ColumnName="AnswerID" />
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+                <ScalarProperty Name="IsCorrect" ColumnName="IsCorrect" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Questions">
+            <EntityTypeMapping TypeName="TestsModel.Question">
+              <MappingFragment StoreEntitySet="Questions">
+                <ScalarProperty Name="QuestionText" ColumnName="QuestionText" />
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+                <ScalarProperty Name="TestID" ColumnName="TestID" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuestionTypes">
+            <EntityTypeMapping TypeName="TestsModel.QuestionType">
+              <MappingFragment StoreEntitySet="QuestionTypes">
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="TestsModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tests">
+            <EntityTypeMapping TypeName="TestsModel.Test">
+              <MappingFragment StoreEntitySet="Tests">
+                <ScalarProperty Name="TestID" ColumnName="TestID" />
+                <ScalarProperty Name="TestName" ColumnName="TestName" />
+                <ScalarProperty Name="TestDescription" ColumnName="TestDescription" />
+                <ScalarProperty Name="TopicID" ColumnName="TopicID" />
+                <ScalarProperty Name="TestTime" ColumnName="TestTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TestsResults">
+            <EntityTypeMapping TypeName="TestsModel.TestsResult">
+              <MappingFragment StoreEntitySet="TestsResults">
+                <ScalarProperty Name="ResultID" ColumnName="ResultID" />
+                <ScalarProperty Name="TestID" ColumnName="TestID" />
+                <ScalarProperty Name="CorrectAnswersTotal" ColumnName="CorrectAnswersTotal" />
+                <ScalarProperty Name="QuestionsTotal" ColumnName="QuestionsTotal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Topics">
+            <EntityTypeMapping TypeName="TestsModel.Topic">
+              <MappingFragment StoreEntitySet="Topics">
+                <ScalarProperty Name="TopicID" ColumnName="TopicID" />
+                <ScalarProperty Name="ParentTopicID" ColumnName="ParentTopicID" />
+                <ScalarProperty Name="TopicName" ColumnName="TopicName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
