@@ -22,7 +22,7 @@ namespace TestCreationPlatform.DAL.Data
     
         public int QuestionID { get; set; }
         public int TestID { get; set; }
-        public string Question1 { get; set; }
+        public string QuestionText { get; set; }
         public int Type { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

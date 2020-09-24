@@ -23,7 +23,7 @@ namespace TestCreationPlatform
             InitializeComponent();
             btnEditPass.Text = btn;
 
-            if (btn != "Pass Test")
+            if (btn != "Start Test")
             {
                 btnEditPass.Text = "Edit Test";
                 btnDeleteTest.Visible = true;
@@ -64,8 +64,8 @@ namespace TestCreationPlatform
                 switch (buttonText)
                 {
                     case "Edit Test":
-                        //case "Pass Test":
-                        QuestionsListForm questionList = new QuestionsListForm();
+                    case "Start Test":
+                        QuestionsListForm questionList = new QuestionsListForm(buttonText);
                         questionList.Test = selected;
                         questionList.ShowDialog();
                         Debug.WriteLine(buttonText);

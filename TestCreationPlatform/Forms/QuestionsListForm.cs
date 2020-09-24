@@ -18,9 +18,12 @@ namespace TestCreationPlatform.Forms
         private List<QuestionModel> Questions { get; set; }
         public TestModel Test { get; set; }
 
-        public QuestionsListForm()
+        private readonly string mode;
+
+        public QuestionsListForm(string clickedButton)
         {
             InitializeComponent();
+            mode = clickedButton;
         }
 
         //private List<QuestionModel> GetTestQuestions(TestModel selected)
@@ -36,6 +39,15 @@ namespace TestCreationPlatform.Forms
         {
             DisplayTestInfo();
             ShowQuestions();
+            if (mode == "Start Test")
+            {
+                this.Text = mode;
+                lstQuestions.Visible = false;
+                label1.Text = $" Prepare for {Questions.Count } question(s).\n Good luck!";
+                btnDeleteQuestion.Visible = false;
+                btnEditQUestion.Visible = false;
+                btnStart.Visible = true;
+            }
         }
 
         private void DisplayTestInfo()
@@ -50,7 +62,7 @@ namespace TestCreationPlatform.Forms
             Questions = question.GetTestQuestions(Test);
 
             lstQuestions.Items.Clear();
-            lstQuestions.DisplayMember = "Question1";
+            lstQuestions.DisplayMember = "QuestionText";
             lstQuestions.ValueMember = "QuestionID";
 
             foreach (QuestionModel item in Questions)
@@ -68,7 +80,7 @@ namespace TestCreationPlatform.Forms
         {
             QuestionService question = new QuestionService();
             question.Delete(selectedQuestion.QuestionID);
-            MessageBox.Show($"'{selectedQuestion.Question1}' question has been deleted.");
+            MessageBox.Show($"'{selectedQuestion.QuestionText}' question has been deleted.");
             ShowQuestions();
         }
 
@@ -86,7 +98,7 @@ namespace TestCreationPlatform.Forms
                 switch (buttonText)
                 {
                     case "Edit":
-                        //case "Pass Test":
+                    case "Start Test":
                         CreateQuestionForm editQuestion = new CreateQuestionForm();
                         editQuestion.Test = Test;
                         editQuestion.EditMode = true;
@@ -97,6 +109,19 @@ namespace TestCreationPlatform.Forms
                         DeleteQuestion(selectedQuestion);
                         break;
                 }
+            }
+        }
+
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+            if (Questions.Count > 0)
+            {
+                QuestionForm questionForm = new QuestionForm(Questions);
+                questionForm.Show();
+            }
+            else
+            {
+                MessageBox.Show("There are no questions in this test. Please select another one!");
             }
         }
     }

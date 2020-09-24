@@ -16,7 +16,7 @@ namespace TestCreationPlatform.DAL.Data
     {
         public int AnswerID { get; set; }
         public int QuestionID { get; set; }
-        public string Answer1 { get; set; }
+        public string AnswerText { get; set; }
         public bool IsCorrect { get; set; }
     
         public virtual Question Question { get; set; }

@@ -14,13 +14,13 @@ namespace TestCreationPlatform.BLL.Models
 
         public int TestID { get; set; }
 
-        public string Question1 { get; set; }
+        public string QuestionText { get; set; }
 
         public int Type { get; set; }
 
         public AnswerModel CorrrectAnswer { get; set; }
 
-        public AnswerModel IncorrectAnswer1 { get; set; }
+        public AnswerModel IncorrectAnswerText { get; set; }
 
         public AnswerModel IncorrectAnswer2 { get; set; }
 
@@ -28,7 +28,7 @@ namespace TestCreationPlatform.BLL.Models
 
         public List<AnswerModel> GetAnswers()
         {
-            AnswerModel[] answersArray = { CorrrectAnswer, IncorrectAnswer1, IncorrectAnswer2, IncorrectAnswer3 };
+            AnswerModel[] answersArray = { CorrrectAnswer, IncorrectAnswerText, IncorrectAnswer2, IncorrectAnswer3 };
             List<AnswerModel> answers = new List<AnswerModel>(answersArray);
 
             return answers;

@@ -47,15 +47,15 @@ namespace TestCreationPlatform
             txtCorrectAnswer.Text = String.Empty;
            
             Helpers.ClearTextBoxes(grpIncorrectAnswers.Controls);
-            txtCorrectAnswer.Text = correctAnswer.Answer1;
+            txtCorrectAnswer.Text = correctAnswer.AnswerText;
 
             if (answers.Count > 1)
             {
                 List<AnswerModel> incorrectAnswers = answers.Where(item => item.IsCorrect == false).ToList();
-                txtIncorrect1.Text = incorrectAnswers[0].Answer1;
-                txtIncorrect2.Text = incorrectAnswers[1].Answer1;
-                txtIncorrect3.Text = incorrectAnswers[2].Answer1;
-                Question.IncorrectAnswer1 = incorrectAnswers[0];
+                txtIncorrect1.Text = incorrectAnswers[0].AnswerText;
+                txtIncorrect2.Text = incorrectAnswers[1].AnswerText;
+                txtIncorrect3.Text = incorrectAnswers[2].AnswerText;
+                Question.IncorrectAnswerText = incorrectAnswers[0];
                 Question.IncorrectAnswer2 = incorrectAnswers[1];
                 Question.IncorrectAnswer3 = incorrectAnswers[2];
             }
@@ -64,7 +64,7 @@ namespace TestCreationPlatform
         private void DisplayQuestionInfo()
         {
             txtTestName.Text = Test.TestName;
-            txtQuestion.Text = Question.Question1;
+            txtQuestion.Text = Question.QuestionText;
 
             if (Question.Type == 1)
             {
@@ -104,7 +104,7 @@ namespace TestCreationPlatform
         {
             QuestionService question = new QuestionService();
 
-            Question.Question1 = txtQuestion.Text;
+            Question.QuestionText = txtQuestion.Text;
             Question.Type = (rdoOpen.Checked) ? 1 : 2;
 //FIX: DELETE INCORRECT ANSWERS IF OPEN QUESTION
 
@@ -118,10 +118,10 @@ namespace TestCreationPlatform
 
         private void UpdateAnswers()
         {
-            Question.CorrrectAnswer.Answer1 = txtCorrectAnswer.Text;
-            Question.IncorrectAnswer1.Answer1 = txtIncorrect1.Text;
-            Question.IncorrectAnswer2.Answer1 = txtIncorrect2.Text;
-            Question.IncorrectAnswer3.Answer1 = txtIncorrect3.Text;
+            Question.CorrrectAnswer.AnswerText = txtCorrectAnswer.Text;
+            Question.IncorrectAnswerText.AnswerText = txtIncorrect1.Text;
+            Question.IncorrectAnswer2.AnswerText = txtIncorrect2.Text;
+            Question.IncorrectAnswer3.AnswerText = txtIncorrect3.Text;
             AnswerService answer = new AnswerService();
             List<AnswerModel> answers = Question.GetAnswers();
 

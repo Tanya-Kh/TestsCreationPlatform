@@ -29,7 +29,7 @@ namespace TestCreationPlatform.BLL.Services.Implementations
                 _questionRepository.Create(new Question()
                 {
                     TestID = item.TestID,
-                    Question1 = item.Question1,
+                    QuestionText = item.QuestionText,
                     Type = item.Type
                 });
 
@@ -59,7 +59,7 @@ namespace TestCreationPlatform.BLL.Services.Implementations
             {
                 QuestionID = question.QuestionID,
                 TestID = question.TestID,
-                Question1 = question.Question1,
+                QuestionText = question.QuestionText,
                 Type = question.Type
             }).AsEnumerable();
 
@@ -83,7 +83,7 @@ namespace TestCreationPlatform.BLL.Services.Implementations
                 {
                     QuestionID = question.QuestionID,
                     TestID = question.TestID,
-                    Question1 = question.Question1,
+                    QuestionText = question.QuestionText,
                     Type = question.Type
                 };
             }
@@ -102,7 +102,7 @@ namespace TestCreationPlatform.BLL.Services.Implementations
                 _questionRepository.Update(id, new Question()
                 {
                     TestID = item.TestID,
-                    Question1 = item.Question1,
+                    QuestionText = item.QuestionText,
                     Type = item.Type,
                     QuestionID = item.QuestionID
                 });

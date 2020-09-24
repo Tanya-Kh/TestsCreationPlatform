@@ -78,7 +78,7 @@
             this.btnPassTest.Name = "btnPassTest";
             this.btnPassTest.Size = new System.Drawing.Size(128, 43);
             this.btnPassTest.TabIndex = 4;
-            this.btnPassTest.Text = "Pass Test";
+            this.btnPassTest.Text = "Start Test";
             this.btnPassTest.UseVisualStyleBackColor = true;
             this.btnPassTest.Click += new System.EventHandler(this.btnStart_Click);
             // 

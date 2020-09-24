@@ -12,7 +12,7 @@ namespace TestCreationPlatform.BLL.Models
 
         public int QuestionID { get; set; }
 
-        public string Answer1 { get; set; }
+        public string AnswerText { get; set; }
 
         public bool IsCorrect { get; set; }
 

@@ -11,7 +11,7 @@
           </Key>
           <Property Name="AnswerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="QuestionID" Type="int" Nullable="false" />
-          <Property Name="Answer" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AnswerText" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="IsCorrect" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Questions">
@@ -20,7 +20,7 @@
           </Key>
           <Property Name="QuestionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TestID" Type="int" Nullable="false" />
-          <Property Name="Question" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="QuestionText" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Type" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="QuestionTypes">
@@ -54,7 +54,7 @@
           <Key>
             <PropertyRef Name="ResultID" />
           </Key>
-          <Property Name="ResultID" Type="int" Nullable="false" />
+          <Property Name="ResultID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TestID" Type="int" Nullable="false" />
           <Property Name="CorrectAnswersTotal" Type="int" Nullable="false" />
           <Property Name="QuestionsTotal" Type="int" Nullable="false" />
@@ -192,7 +192,7 @@
           </Key>
           <Property Name="AnswerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="QuestionID" Type="Int32" Nullable="false" />
-          <Property Name="Answer1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AnswerText" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IsCorrect" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Question" Relationship="Self.FK_Answers_Questions" FromRole="Answers" ToRole="Questions" />
         </EntityType>
@@ -202,7 +202,7 @@
           </Key>
           <Property Name="QuestionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TestID" Type="Int32" Nullable="false" />
-          <Property Name="Question1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="QuestionText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Type" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Answers" Relationship="Self.FK_Answers_Questions" FromRole="Questions" ToRole="Answers" />
           <NavigationProperty Name="QuestionType" Relationship="Self.FK_Questions_QuestionTypes1" FromRole="Questions" ToRole="QuestionTypes" />
@@ -394,9 +394,9 @@
           <EntitySetMapping Name="Answers">
             <EntityTypeMapping TypeName="TestsModel.Answer">
               <MappingFragment StoreEntitySet="Answers">
+                <ScalarProperty Name="AnswerText" ColumnName="AnswerText" />
                 <ScalarProperty Name="AnswerID" ColumnName="AnswerID" />
                 <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
-                <ScalarProperty Name="Answer1" ColumnName="Answer" />
                 <ScalarProperty Name="IsCorrect" ColumnName="IsCorrect" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -404,9 +404,9 @@
           <EntitySetMapping Name="Questions">
             <EntityTypeMapping TypeName="TestsModel.Question">
               <MappingFragment StoreEntitySet="Questions">
+                <ScalarProperty Name="QuestionText" ColumnName="QuestionText" />
                 <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
                 <ScalarProperty Name="TestID" ColumnName="TestID" />
-                <ScalarProperty Name="Question1" ColumnName="Question" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -52,10 +52,15 @@ namespace TestCreationPlatform.BLL.Services.Implementations
 
         public List<AnswerModel> GetQuestionAnswers(QuestionModel questionModel)
         {
-            var allAnswers = GetAll().ToList();
-            var questionAnswers = allAnswers.Where(item => item.QuestionID == questionModel.QuestionID).ToList();
+            var questionAnswers = GetAll().Where(item => item.QuestionID == questionModel.QuestionID).ToList();
 
             return questionAnswers;
+        }
+
+        public AnswerModel GetCorrectAnswer(QuestionModel questionModel)
+        {
+            var correct = GetQuestionAnswers(questionModel).Where(item => item.IsCorrect == true).FirstOrDefault();
+            return correct;
         }
 
         public AnswerModel GetItem(int id)
@@ -88,7 +93,7 @@ namespace TestCreationPlatform.BLL.Services.Implementations
         {
             Answer answer = new Answer()
             {
-                Answer1 = answerModel.Answer1,
+                AnswerText = answerModel.AnswerText,
                 QuestionID = answerModel.QuestionID,
                 IsCorrect = answerModel.IsCorrect,
                 AnswerID = answerModel.AnswerID
@@ -101,7 +106,7 @@ namespace TestCreationPlatform.BLL.Services.Implementations
         {
             AnswerModel answerModel = new AnswerModel()
             {
-                Answer1 = answer.Answer1,
+                AnswerText = answer.AnswerText,
                 QuestionID = answer.QuestionID,
                 IsCorrect = answer.IsCorrect,
                 AnswerID = answer.AnswerID
