@@ -38,18 +38,10 @@ namespace TestCreationPlatform
             }
         }
 
-        private List<AnswerModel> GetAnswers()
-        {
-            AnswerService answer = new AnswerService();
-            List<AnswerModel> allAnswers = answer.GetAll().ToList();
-            List<AnswerModel> questionAnswers = allAnswers.Where(item => item.QuestionID == Question.QuestionID).ToList();
-            //Question.QuestionAnswers = questionAnswers;
-
-            return questionAnswers;
-        }
         private void DisplayAnswers()
         {
-            List<AnswerModel> answers = GetAnswers();
+            AnswerService answer = new AnswerService();
+            List<AnswerModel> answers = answer.GetQuestionAnswers(Question);
             AnswerModel correctAnswer = answers.Where(item => item.IsCorrect == true).FirstOrDefault();
             Question.CorrrectAnswer = correctAnswer;
             txtCorrectAnswer.Text = String.Empty;
@@ -68,19 +60,7 @@ namespace TestCreationPlatform
                 Question.IncorrectAnswer3 = incorrectAnswers[2];
             }
         }
-
-        //private void ClearTextBoxes(Control.ControlCollection controls)
-        //{
-
-        //    foreach (Control ctrl in controls)
-        //    {
-        //        if (ctrl is TextBox)
-        //        {
-        //            ctrl.Text = String.Empty;
-        //        }
-        //    }
-        //}
-
+ 
         private void DisplayQuestionInfo()
         {
             txtTestName.Text = Test.TestName;
@@ -142,9 +122,8 @@ namespace TestCreationPlatform
             Question.IncorrectAnswer1.Answer1 = txtIncorrect1.Text;
             Question.IncorrectAnswer2.Answer1 = txtIncorrect2.Text;
             Question.IncorrectAnswer3.Answer1 = txtIncorrect3.Text;
-
-            List<AnswerModel> answers = Question.GetAnswers();
             AnswerService answer = new AnswerService();
+            List<AnswerModel> answers = Question.GetAnswers();
 
             foreach (var item in answers)
             {

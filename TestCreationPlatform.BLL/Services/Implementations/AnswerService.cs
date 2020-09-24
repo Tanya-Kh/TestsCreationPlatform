@@ -50,6 +50,14 @@ namespace TestCreationPlatform.BLL.Services.Implementations
             return _answerRepository.GetAll().AsEnumerable().Select(answer => ConvertAnswerToAnswerModel(answer));
         }
 
+        public List<AnswerModel> GetQuestionAnswers(QuestionModel questionModel)
+        {
+            var allAnswers = GetAll().ToList();
+            var questionAnswers = allAnswers.Where(item => item.QuestionID == questionModel.QuestionID).ToList();
+
+            return questionAnswers;
+        }
+
         public AnswerModel GetItem(int id)
         {
             if (id > 0)

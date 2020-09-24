@@ -26,40 +26,12 @@ namespace TestCreationPlatform.BLL.Models
 
         public AnswerModel IncorrectAnswer3 { get; set; }
 
-        //public List<AnswerModel> QuestionAnswers { get; set; }
-
-        //private List<AnswerModel> questionAnswers;
-
-        //public List<AnswerModel> QuestionAnswers
-        //{
-        //    get
-        //    {
-        //        return questionAnswers;
-        //    }
-        //    set
-        //    {
-        //        questionAnswers = GetAnswers();
-        //    }
-        //}
-
         public List<AnswerModel> GetAnswers()
         {
             AnswerModel[] answersArray = { CorrrectAnswer, IncorrectAnswer1, IncorrectAnswer2, IncorrectAnswer3 };
             List<AnswerModel> answers = new List<AnswerModel>(answersArray);
 
             return answers;
-
         }
-        //private List<AnswerModel> GetAnswers()
-        //{
-        //    AnswerService answer = new AnswerService();
-        //    List<AnswerModel> allAnswers = answer.GetAll().ToList();
-        //    List<AnswerModel> questionAnswers = allAnswers.Where(item => item.QuestionID == this.QuestionID).ToList();
-
-        //    return questionAnswers;
-        //}
-
     }
-
-
 }
