@@ -26,19 +26,12 @@ namespace TestCreationPlatform.Forms
             mode = clickedButton;
         }
 
-        //private List<QuestionModel> GetTestQuestions(TestModel selected)
-        //{
-        //    QuestionService question = new QuestionService();
-        //    List<QuestionModel> allQuestions = question.GetAll().ToList();
-        //    List<QuestionModel> testQuestions = allQuestions.Where(item => item.TestID == selected.TestID).ToList();
-           
-        //    return testQuestions;
-        //}
 
         private void QuestionsListForm_Load(object sender, EventArgs e)
         {
             DisplayTestInfo();
             ShowQuestions();
+
             if (mode == "Start Test")
             {
                 this.Text = mode;
@@ -46,6 +39,7 @@ namespace TestCreationPlatform.Forms
                 label1.Text = $" Prepare for {Questions.Count } question(s).\n Good luck!";
                 btnDeleteQuestion.Visible = false;
                 btnEditQUestion.Visible = false;
+                btnAdd.Visible = false;
                 btnStart.Visible = true;
             }
         }
@@ -89,7 +83,7 @@ namespace TestCreationPlatform.Forms
             string buttonText = (sender as Button).Text;
             QuestionModel selectedQuestion = (QuestionModel)lstQuestions.SelectedItem;
 
-            if (selectedQuestion == null)
+            if (buttonText != "Add" && selectedQuestion == null)
             {
                 MessageBox.Show("Please select a question.");
             }
@@ -97,12 +91,16 @@ namespace TestCreationPlatform.Forms
             {
                 switch (buttonText)
                 {
+                    case "Add":
                     case "Edit":
                     case "Start Test":
                         CreateQuestionForm editQuestion = new CreateQuestionForm();
                         editQuestion.Test = Test;
-                        editQuestion.EditMode = true;
-                        editQuestion.Question = selectedQuestion;
+                        editQuestion.EditMode = buttonText;
+                        if (selectedQuestion != null)
+                        {
+                            editQuestion.Question = selectedQuestion;
+                        }
                         editQuestion.ShowDialog();
                         break;
                     case "Delete":

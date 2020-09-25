@@ -21,7 +21,7 @@ namespace TestCreationPlatform
         private void btnStart_Click(object sender, EventArgs e)
         {
             string clickedBtn = (sender as Button).Text;
-            this.Hide();
+            //this.Hide();
             TestForm testForm = new TestForm(clickedBtn);
             testForm.Show();
         }

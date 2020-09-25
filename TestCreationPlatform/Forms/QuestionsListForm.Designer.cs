@@ -37,11 +37,12 @@
             this.lblDescription = new System.Windows.Forms.Label();
             this.lable40 = new System.Windows.Forms.Label();
             this.btnStart = new System.Windows.Forms.Button();
+            this.btnAdd = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnDeleteQuestion
             // 
-            this.btnDeleteQuestion.Location = new System.Drawing.Point(311, 230);
+            this.btnDeleteQuestion.Location = new System.Drawing.Point(28, 274);
             this.btnDeleteQuestion.Name = "btnDeleteQuestion";
             this.btnDeleteQuestion.Size = new System.Drawing.Size(188, 29);
             this.btnDeleteQuestion.TabIndex = 7;
@@ -51,7 +52,7 @@
             // 
             // btnEditQUestion
             // 
-            this.btnEditQUestion.Location = new System.Drawing.Point(311, 277);
+            this.btnEditQUestion.Location = new System.Drawing.Point(304, 274);
             this.btnEditQUestion.Name = "btnEditQUestion";
             this.btnEditQUestion.Size = new System.Drawing.Size(188, 29);
             this.btnEditQUestion.TabIndex = 6;
@@ -65,7 +66,7 @@
             this.lstQuestions.ItemHeight = 16;
             this.lstQuestions.Location = new System.Drawing.Point(28, 129);
             this.lstQuestions.Name = "lstQuestions";
-            this.lstQuestions.Size = new System.Drawing.Size(744, 84);
+            this.lstQuestions.Size = new System.Drawing.Size(744, 116);
             this.lstQuestions.TabIndex = 5;
             // 
             // label1
@@ -117,7 +118,7 @@
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(349, 330);
+            this.btnStart.Location = new System.Drawing.Point(349, 274);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(188, 29);
             this.btnStart.TabIndex = 12;
@@ -126,11 +127,22 @@
             this.btnStart.Visible = false;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
+            // btnAdd
+            // 
+            this.btnAdd.Location = new System.Drawing.Point(584, 274);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(188, 29);
+            this.btnAdd.TabIndex = 13;
+            this.btnAdd.Text = "Add";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnDeleteEditQuestion_Click);
+            // 
             // QuestionsListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(819, 371);
+            this.ClientSize = new System.Drawing.Size(819, 317);
+            this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.lblDescription);
             this.Controls.Add(this.lable40);
@@ -160,5 +172,6 @@
         private System.Windows.Forms.Label lblDescription;
         private System.Windows.Forms.Label lable40;
         private System.Windows.Forms.Button btnStart;
+        private System.Windows.Forms.Button btnAdd;
     }
 }
