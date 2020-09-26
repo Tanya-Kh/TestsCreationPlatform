@@ -26,7 +26,11 @@ namespace TestCreationPlatform.BLL.Services.Implementations
 
             if (item != null)
             {
-                _questionTypeRepository.Create(ConvertQuestionTypeModelToQuestionType(item));
+                _questionTypeRepository.Create(new QuestionType
+                {
+                    TypeName = item.TypeName
+                });
+
                 created = true;
             }
 
@@ -39,7 +43,12 @@ namespace TestCreationPlatform.BLL.Services.Implementations
 
             if (id > 0)
             {
-                _questionTypeRepository.Update(id, ConvertQuestionTypeModelToQuestionType(item));
+                _questionTypeRepository.Update(id, new QuestionType
+                {
+                    TypeName = item.TypeName,
+                    TypeID = item.TypeID
+                });
+
                 updated = true;
             }
 
@@ -51,7 +60,12 @@ namespace TestCreationPlatform.BLL.Services.Implementations
             if (id > 0)
             {
                 QuestionType questionType = _questionTypeRepository.GetItem(id);
-                return ConvertQuestionTypeToQuestionTypeModel(questionType);
+
+                return new QuestionTypeModel()
+                {
+                    TypeName = questionType.TypeName,
+                    TypeID = questionType.TypeID
+                };
             }
             else
             {
@@ -61,27 +75,11 @@ namespace TestCreationPlatform.BLL.Services.Implementations
 
         IEnumerable<QuestionTypeModel> IService<QuestionTypeModel>.GetAll()
         {
-            return _questionTypeRepository.GetAll().Select(questionType => ConvertQuestionTypeToQuestionTypeModel(questionType)).AsEnumerable();
-        }
-
-        private static QuestionType ConvertQuestionTypeModelToQuestionType(QuestionTypeModel questionTypeModel)
-        {
-            QuestionType questionType = new QuestionType()
+            return _questionTypeRepository.GetAll().Select(questionType => new QuestionTypeModel()
             {
-                TypeName = questionTypeModel.TypeName
-            };
-
-            return questionType;
-        }
-
-        private static QuestionTypeModel ConvertQuestionTypeToQuestionTypeModel(QuestionType questionType)
-        {
-            QuestionTypeModel questionTypeModel = new QuestionTypeModel()
-            {
-                TypeName = questionType.TypeName
-            };
-
-            return questionTypeModel;
+                TypeName = questionType.TypeName,
+                TypeID = questionType.TypeID
+            }).AsEnumerable();
         }
 
         public bool Delete(int id)

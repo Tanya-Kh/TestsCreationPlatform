@@ -44,7 +44,7 @@ namespace TestCreationPlatform
         {
             AnswerService answer = new AnswerService();
             List<AnswerModel> answers = answer.GetQuestionAnswers(Question);
-            AnswerModel correctAnswer = answers.Where(item => item.IsCorrect == true).FirstOrDefault();
+            AnswerModel correctAnswer = answers.FirstOrDefault(item => item.IsCorrect == true);
             Question.CorrrectAnswer = correctAnswer;
             txtCorrectAnswer.Text = String.Empty;
 

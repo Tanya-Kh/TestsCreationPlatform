@@ -79,10 +79,8 @@ namespace TestCreationPlatform.BLL.Services.Implementations
                     TestID = test.TestID
                 };
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
 
         public bool Update(int id, TestModel item)
@@ -92,13 +90,13 @@ namespace TestCreationPlatform.BLL.Services.Implementations
             if (id > 0)
             {
                 _testRepository.Update(id, new Test()
-            {
-                TestName = item.TestName,
-                TestDescription = item.TestDescription,
-                TopicID = item.TopicID,
-                TestTime = item.TestTime,
-                TestID = item.TestID
-            });
+                {
+                    TestName = item.TestName,
+                    TestDescription = item.TestDescription,
+                    TopicID = item.TopicID,
+                    TestTime = item.TestTime,
+                    TestID = item.TestID
+                });
                 updated = true;
             }
 

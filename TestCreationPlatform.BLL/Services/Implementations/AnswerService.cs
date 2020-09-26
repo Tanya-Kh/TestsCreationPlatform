@@ -25,7 +25,12 @@ namespace TestCreationPlatform.BLL.Services.Implementations
 
             if (item != null)
             {
-                _answerRepository.Create(ConvertAnswerModelToAnswer(item));
+                _answerRepository.Create(new Answer
+                {
+                    AnswerText = item.AnswerText,
+                    QuestionID = item.QuestionID,
+                    IsCorrect = item.IsCorrect,
+                });
                 created = true;
             }
 
@@ -47,7 +52,13 @@ namespace TestCreationPlatform.BLL.Services.Implementations
 
         public IEnumerable<AnswerModel> GetAll()
         {
-            return _answerRepository.GetAll().AsEnumerable().Select(answer => ConvertAnswerToAnswerModel(answer));
+            return _answerRepository.GetAll().Select(answer => new AnswerModel()
+            {
+                AnswerText = answer.AnswerText,
+                QuestionID = answer.QuestionID,
+                IsCorrect = answer.IsCorrect,
+                AnswerID = answer.AnswerID
+            }).AsEnumerable();
         }
 
         public List<AnswerModel> GetQuestionAnswers(QuestionModel questionModel)
@@ -59,7 +70,7 @@ namespace TestCreationPlatform.BLL.Services.Implementations
 
         public AnswerModel GetCorrectAnswer(QuestionModel questionModel)
         {
-            var correct = GetQuestionAnswers(questionModel).Where(item => item.IsCorrect == true).FirstOrDefault();
+            var correct = GetQuestionAnswers(questionModel).FirstOrDefault(item => item.IsCorrect == true);
             return correct;
         }
 
@@ -68,12 +79,17 @@ namespace TestCreationPlatform.BLL.Services.Implementations
             if (id > 0)
             {
                 Answer answer = _answerRepository.GetItem(id);
-                return ConvertAnswerToAnswerModel(answer);
+
+                return new AnswerModel()
+                {
+                    AnswerText = answer.AnswerText,
+                    QuestionID = answer.QuestionID,
+                    IsCorrect = answer.IsCorrect,
+                    AnswerID = answer.AnswerID
+                };
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
 
         public bool Update(int id, AnswerModel item)
@@ -82,37 +98,17 @@ namespace TestCreationPlatform.BLL.Services.Implementations
 
             if (id > 0)
             {
-                _answerRepository.Update(id, ConvertAnswerModelToAnswer(item));
+                _answerRepository.Update(id, new Answer()
+                {
+                    AnswerText = item.AnswerText,
+                    QuestionID = item.QuestionID,
+                    IsCorrect = item.IsCorrect,
+                    AnswerID = item.AnswerID
+                });
                 updated = true;
             }
 
             return updated;
-        }
-
-        private static Answer ConvertAnswerModelToAnswer(AnswerModel answerModel)
-        {
-            Answer answer = new Answer()
-            {
-                AnswerText = answerModel.AnswerText,
-                QuestionID = answerModel.QuestionID,
-                IsCorrect = answerModel.IsCorrect,
-                AnswerID = answerModel.AnswerID
-            };
-
-            return answer;
-        }
-
-        private static AnswerModel ConvertAnswerToAnswerModel(Answer answer)
-        {
-            AnswerModel answerModel = new AnswerModel()
-            {
-                AnswerText = answer.AnswerText,
-                QuestionID = answer.QuestionID,
-                IsCorrect = answer.IsCorrect,
-                AnswerID = answer.AnswerID
-            };
-
-            return answerModel;
         }
     }
 }
