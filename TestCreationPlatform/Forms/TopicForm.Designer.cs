@@ -68,6 +68,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtTopicName);
             this.Name = "TopicForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Topic";
             this.ResumeLayout(false);
             this.PerformLayout();

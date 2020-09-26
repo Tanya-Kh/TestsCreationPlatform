@@ -110,11 +110,11 @@ namespace TestCreationPlatform
         {
             if (userAnswer == correctAnswer)
             {
-                correctAnswers.Add(currentQuestion.QuestionText);
+                correctAnswers.Add($"{currentQuestion.QuestionText}    ANSWER: {userAnswer}");
             }
             else
             {
-                inCorrectAnswers.Add(currentQuestion.QuestionText);
+                inCorrectAnswers.Add($"{currentQuestion.QuestionText}    ANSWER: {userAnswer}   CORRECT: {correctAnswer}");
             }
         }
     }

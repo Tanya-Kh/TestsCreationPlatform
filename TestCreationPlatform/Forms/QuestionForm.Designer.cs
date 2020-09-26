@@ -43,11 +43,12 @@
             // 
             this.lblQuestion.AutoSize = true;
             this.lblQuestion.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblQuestion.Location = new System.Drawing.Point(62, 24);
+            this.lblQuestion.Location = new System.Drawing.Point(24, 24);
+            this.lblQuestion.MaximumSize = new System.Drawing.Size(750, 0);
             this.lblQuestion.Name = "lblQuestion";
-            this.lblQuestion.Size = new System.Drawing.Size(128, 24);
+            this.lblQuestion.Size = new System.Drawing.Size(86, 24);
             this.lblQuestion.TabIndex = 3;
-            this.lblQuestion.Text = "Question Text";
+            this.lblQuestion.Text = "Question";
             this.lblQuestion.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // button1
@@ -118,6 +119,7 @@
             // 
             // btnNextQuestion
             // 
+            this.btnNextQuestion.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNextQuestion.Location = new System.Drawing.Point(366, 351);
             this.btnNextQuestion.Name = "btnNextQuestion";
             this.btnNextQuestion.Size = new System.Drawing.Size(75, 32);

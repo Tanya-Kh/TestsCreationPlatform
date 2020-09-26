@@ -111,6 +111,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(46, 22);
             this.textBox1.TabIndex = 12;
+            this.textBox1.Visible = false;
             // 
             // label4
             // 
@@ -120,6 +121,7 @@
             this.label4.Size = new System.Drawing.Size(196, 17);
             this.label4.TabIndex = 11;
             this.label4.Text = "Time to pass a test (minutes)*";
+            this.label4.Visible = false;
             // 
             // cboSubTopics
             // 
@@ -132,6 +134,7 @@
             this.cboSubTopics.TabIndex = 14;
             this.cboSubTopics.DropDown += new System.EventHandler(this.cboTopics_DropDown);
             this.cboSubTopics.SelectedIndexChanged += new System.EventHandler(this.cboSubTopics_SelectedIndexChanged);
+            this.cboSubTopics.TextChanged += new System.EventHandler(this.cboSubSubTopics_SelectedIndexChanged);
             // 
             // label5
             // 

@@ -51,30 +51,43 @@ namespace TestCreationPlatform
         private void cboTopics_SelectedIndexChanged(object sender, EventArgs e)
         {
             Helpers.ClearTextBoxes(this.Controls);
-            Helpers.ClearComboBoxes(this.Controls);
             TopicModel selectedTopic = (TopicModel)cboTopics.SelectedItem;
             Topic = selectedTopic;
-            linkAddSubTopic.Visible = true;
             ShowTopics(cboSubTopics, Topic);
 
-            if (cboTopics.SelectedItem != null)
+            if (cboTopics.SelectedIndex != -1)
             {
                 linkTopicDelete.Visible = true;
                 cboSubTopics.Enabled = true;
+                linkAddSubTopic.Visible = true;
+            }
+            else
+            {
+                linkTopicDelete.Visible = false;
+                linkAddSubTopic.Visible = false;
+                cboSubTopics.Enabled = false;
+                cboSubTopics_SelectedIndexChanged(sender, e);
             }
         }
 
         private void cboSubTopics_SelectedIndexChanged(object sender, EventArgs e)
         {
-            TopicModel selectedSubTopic = (TopicModel)cboSubTopics.SelectedItem;
+             TopicModel selectedSubTopic = (TopicModel)cboSubTopics.SelectedItem;
             SubTopic = selectedSubTopic;
             ShowTopics(cboSubSubTopics, SubTopic);
 
-            if (cboSubTopics.SelectedItem != null)
+            if (cboSubTopics.SelectedIndex != -1)
             {
                 linkDeleteSubTopic.Visible = true;
                 linkAddSubSubTopic.Visible = true;
                 cboSubSubTopics.Enabled = true;
+            }
+            else
+            {
+                linkDeleteSubTopic.Visible = false;
+                linkDeleteSubSubTopic.Visible = false;
+                linkAddSubSubTopic.Visible = false;
+                cboSubSubTopics.Enabled = false;
             }
         }
 
@@ -86,6 +99,10 @@ namespace TestCreationPlatform
             if (cboSubSubTopics.SelectedItem != null)
             {
                 linkDeleteSubSubTopic.Visible = true;
+            }
+            else
+            {
+                linkDeleteSubSubTopic.Visible = false;
             }
         }
 
@@ -119,7 +136,6 @@ namespace TestCreationPlatform
                     TestName = txtTest.Text,
                     TestDescription = txtDescription.Text,
                     TopicID = GetTopicId(),
-                    //TO DO - ADD TIME
                 });
                 message = "New test was created.";
             }
@@ -142,8 +158,9 @@ namespace TestCreationPlatform
         {
             DeleteTopic(Topic);
             ShowTopics(cboTopics);
-            cboSubTopics.Items.Clear();
-            cboSubSubTopics.Items.Clear();
+            linkAddSubTopic.Visible = false;
+            cboTopics_SelectedIndexChanged(sender, e);
+            Helpers.ClearComboBoxes(this.Controls);
         }
 
         private void DeleteTopic(TopicModel selectedTopic)
@@ -161,7 +178,7 @@ namespace TestCreationPlatform
                 topic.Delete(subTopic.TopicID);
             }
             topic.Delete(selectedTopic.TopicID);
-            MessageBox.Show($"'{selectedTopic.TopicName}' topic has been deleted.");
+            //MessageBox.Show($"'{selectedTopic.TopicName}' topic has been deleted.");
         }
 
         private void linkDeleteSubTopic_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -175,6 +192,8 @@ namespace TestCreationPlatform
 
             DeleteTopic(SubTopic);
             ShowTopics(cboSubTopics, Topic);
+            cboSubTopics_SelectedIndexChanged(sender, e);
+            cboSubSubTopics_SelectedIndexChanged(sender, e);
             cboSubSubTopics.Items.Clear();
         }
 
@@ -192,6 +211,7 @@ namespace TestCreationPlatform
         {
             DeleteTopic(SubSubTopic);
             ShowTopics(cboSubSubTopics, SubTopic);
+            linkDeleteSubSubTopic.Visible = false;
         }
 
         private void cboTopics_DropDown(object sender, EventArgs e)

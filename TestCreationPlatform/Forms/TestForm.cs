@@ -67,8 +67,8 @@ namespace TestCreationPlatform
                     case "Start Test":
                         QuestionsListForm questionList = new QuestionsListForm(buttonText);
                         questionList.Test = selected;
-                        questionList.ShowDialog();
-                        Debug.WriteLine(buttonText);
+                        questionList.Show();
+                        Close();
                         break;
                     case "Delete Test":
                         DeleteTest(selected);

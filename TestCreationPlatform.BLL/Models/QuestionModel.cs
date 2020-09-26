@@ -28,10 +28,10 @@ namespace TestCreationPlatform.BLL.Models
 
         public List<AnswerModel> GetAnswers()
         {
-            AnswerModel[] answersArray = { CorrrectAnswer, IncorrectAnswerText, IncorrectAnswer2, IncorrectAnswer3 };
-            List<AnswerModel> answers = new List<AnswerModel>(answersArray);
+            AnswerModel[] incorrectArray = {IncorrectAnswerText, IncorrectAnswer2, IncorrectAnswer3 };
+            List<AnswerModel> incorrectAnswers = new List<AnswerModel>(incorrectArray);
 
-            return answers;
+            return incorrectAnswers;
         }
     }
 }

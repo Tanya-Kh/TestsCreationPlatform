@@ -33,8 +33,6 @@ namespace TestCreationPlatform
             {
                 this.Text = "Edit Question";
                 btnNext.Text = "Update";
-                btnFinish.Visible = false;
-
             }
 
             DisplayQuestionInfo();
@@ -201,20 +199,37 @@ namespace TestCreationPlatform
             if (IsValid())
             {
                 question.Update(Question.QuestionID, Question);
+            }
+        }
+
+        private void UpdateAnswers()
+        {
+            AnswerService answer = new AnswerService();
+
+            if (IsValid())
+            {
+                Question.CorrrectAnswer.AnswerText = txtCorrectAnswer.Text;
+                answer.Update(Question.CorrrectAnswer.AnswerID, Question.CorrrectAnswer);
+                List<AnswerModel> incorrectAnswers = Question.GetAnswers();
+
+                if (incorrectAnswers[0] == null)
+                {
+                    ChangeOpenToClosed(incorrectAnswers);
+                }
+                else
+                {
+                    UpdateIncorrectAnswers(incorrectAnswers);
+                }
                 MessageBox.Show($"Question has been updated.");
             }
             else
             {
                 MessageBox.Show("ERROR!Please check that all fields are completed and answers are different.");
             }
-            //FIX: UPDATE Questions List on QuestionListForm
-            //QuestionsListForm questionList = new QuestionsListForm();
-            //questionList.ShowQuestions();
         }
 
-        private void UpdateAnswers()
+        private void UpdateIncorrectAnswers(List<AnswerModel> incorrectAnswers)
         {
-            Question.CorrrectAnswer.AnswerText = txtCorrectAnswer.Text;
             Question.IncorrectAnswerText.AnswerText = txtIncorrect1.Text;
             Question.IncorrectAnswer2.AnswerText = txtIncorrect2.Text;
             Question.IncorrectAnswer3.AnswerText = txtIncorrect3.Text;
@@ -227,9 +242,20 @@ namespace TestCreationPlatform
             }
         }
 
-        private void btnFinish_Click(object sender, EventArgs e)
+        private void ChangeOpenToClosed(List<AnswerModel> incorrectAnswers)
         {
-            Close();
+            AnswerService answer = new AnswerService();
+            List<string> incorrectList = new List<string> { txtIncorrect1.Text, txtIncorrect2.Text, txtIncorrect3.Text };
+
+            foreach (var item in incorrectList)
+            {
+                answer.Create(new AnswerModel
+                {
+                    QuestionID = Question.QuestionID,
+                    IsCorrect = false,
+                    AnswerText = item
+                });
+            }
         }
     }
 }
