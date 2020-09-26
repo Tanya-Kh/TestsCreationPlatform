@@ -33,6 +33,7 @@
             this.btnCreateTest = new System.Windows.Forms.Button();
             this.btnPassTest = new System.Windows.Forms.Button();
             this.btnEditTest = new System.Windows.Forms.Button();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.imgQuiz)).BeginInit();
             this.SuspendLayout();
             // 
@@ -62,7 +63,7 @@
             // 
             this.btnCreateTest.AutoSize = true;
             this.btnCreateTest.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCreateTest.Location = new System.Drawing.Point(30, 374);
+            this.btnCreateTest.Location = new System.Drawing.Point(603, 374);
             this.btnCreateTest.Name = "btnCreateTest";
             this.btnCreateTest.Size = new System.Drawing.Size(159, 43);
             this.btnCreateTest.TabIndex = 3;
@@ -74,7 +75,7 @@
             // 
             this.btnPassTest.AutoSize = true;
             this.btnPassTest.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPassTest.Location = new System.Drawing.Point(620, 374);
+            this.btnPassTest.Location = new System.Drawing.Point(30, 374);
             this.btnPassTest.Name = "btnPassTest";
             this.btnPassTest.Size = new System.Drawing.Size(128, 43);
             this.btnPassTest.TabIndex = 4;
@@ -86,7 +87,7 @@
             // 
             this.btnEditTest.AutoSize = true;
             this.btnEditTest.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEditTest.Location = new System.Drawing.Point(298, 374);
+            this.btnEditTest.Location = new System.Drawing.Point(275, 374);
             this.btnEditTest.Name = "btnEditTest";
             this.btnEditTest.Size = new System.Drawing.Size(210, 43);
             this.btnEditTest.TabIndex = 5;
@@ -94,11 +95,25 @@
             this.btnEditTest.UseVisualStyleBackColor = true;
             this.btnEditTest.Click += new System.EventHandler(this.btnStart_Click);
             // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkLabel1.LinkColor = System.Drawing.Color.SteelBlue;
+            this.linkLabel1.Location = new System.Drawing.Point(35, 295);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(80, 24);
+            this.linkLabel1.TabIndex = 6;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Statistics";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
             // GreetingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.btnEditTest);
             this.Controls.Add(this.btnPassTest);
             this.Controls.Add(this.btnCreateTest);
@@ -120,6 +135,7 @@
         private System.Windows.Forms.Button btnCreateTest;
         private System.Windows.Forms.Button btnPassTest;
         private System.Windows.Forms.Button btnEditTest;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }
 

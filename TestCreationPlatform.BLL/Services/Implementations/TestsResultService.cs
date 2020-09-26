@@ -97,5 +97,16 @@ namespace TestCreationPlatform.BLL.Services.Implementations
 
             return updated;
         }
+
+        public string GetTestName(int id)
+        {
+            TestService test = new TestService();
+            return test.GetItem(id).TestName;
+        }
+
+        public int GetTestTotal (int id)
+        {
+            return GetAll().Where(item => item.TestID == id).Count();
+        }
     }
 }

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TestCreationPlatform.Forms;
 
 namespace TestCreationPlatform
 {
@@ -30,6 +31,12 @@ namespace TestCreationPlatform
         {
             CreateTestForm createTest = new CreateTestForm();
             createTest.Show();
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            StatisticsForm statistics = new StatisticsForm();
+            statistics.Show();
         }
     }
 }
