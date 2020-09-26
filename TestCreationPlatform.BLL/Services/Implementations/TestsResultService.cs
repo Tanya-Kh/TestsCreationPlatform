@@ -26,7 +26,12 @@ namespace TestCreationPlatform.BLL.Services.Implementations
 
             if (item != null)
             {
-                _testsResultRepository.Create(ConvertTestsResultModelToTestsResult(item));
+                _testsResultRepository.Create(new TestsResult()
+                {
+                    TestID = item.TestID,
+                    CorrectAnswersTotal = item.CorrectAnswersTotal,
+                    QuestionsTotal = item.QuestionsTotal,
+                });
                 created = true;
             }
 
@@ -48,7 +53,13 @@ namespace TestCreationPlatform.BLL.Services.Implementations
 
         public IEnumerable<TestsResultModel> GetAll()
         {
-            return _testsResultRepository.GetAll().Select(testsResult => ConvertTestsResultToTestsResultModel(testsResult)).AsEnumerable();
+            return _testsResultRepository.GetAll().Select(testsResult => new TestsResultModel()
+            {
+                TestID = testsResult.TestID,
+                CorrectAnswersTotal = testsResult.CorrectAnswersTotal,
+                QuestionsTotal = testsResult.QuestionsTotal,
+                ResultID = testsResult.ResultID
+            }).AsEnumerable();
         }
 
         public TestsResultModel GetItem(int id)
@@ -56,12 +67,16 @@ namespace TestCreationPlatform.BLL.Services.Implementations
             if (id > 0)
             {
                 TestsResult testsResult = _testsResultRepository.GetItem(id);
-                return ConvertTestsResultToTestsResultModel(testsResult);
+
+                return new TestsResultModel()
+                {
+                    TestID = testsResult.TestID,
+                    CorrectAnswersTotal = testsResult.CorrectAnswersTotal,
+                    QuestionsTotal = testsResult.QuestionsTotal,
+                    ResultID = testsResult.ResultID
+                };
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
         public bool Update(int id, TestsResultModel item)
@@ -70,35 +85,28 @@ namespace TestCreationPlatform.BLL.Services.Implementations
 
             if (id > 0)
             {
-                _testsResultRepository.Update(id, ConvertTestsResultModelToTestsResult(item));
+                _testsResultRepository.Update(id, new TestsResult()
+                {
+                    TestID = item.TestID,
+                    CorrectAnswersTotal = item.CorrectAnswersTotal,
+                    QuestionsTotal = item.QuestionsTotal,
+                    ResultID = item.ResultID
+                });
                 updated = true;
             }
 
             return updated;
         }
 
-        private static TestsResult ConvertTestsResultModelToTestsResult(TestsResultModel testsResultModel)
+        public string GetTestName(int id)
         {
-            TestsResult testsResult = new TestsResult()
-            {
-                TestID = testsResultModel.TestID,
-                CorrectAnswersTotal = testsResultModel.CorrectAnswersTotal,
-                QuestionsTotal = testsResultModel.QuestionsTotal
-            };
-
-            return testsResult;
+            TestService test = new TestService();
+            return test.GetItem(id).TestName;
         }
 
-        private static TestsResultModel ConvertTestsResultToTestsResultModel(TestsResult testsResult)
+        public int GetTestTotal (int id)
         {
-            TestsResultModel testsResultModel = new TestsResultModel()
-            {
-                TestID = testsResult.TestID,
-                CorrectAnswersTotal = testsResult.CorrectAnswersTotal,
-                QuestionsTotal = testsResult.QuestionsTotal
-            };
-
-            return testsResultModel;
+            return GetAll().Where(item => item.TestID == id).Count();
         }
     }
 }

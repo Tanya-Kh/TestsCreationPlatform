@@ -43,7 +43,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.grpIncorrectAnswers = new System.Windows.Forms.GroupBox();
             this.btnNext = new System.Windows.Forms.Button();
-            this.btnFinish = new System.Windows.Forms.Button();
             this.txtTestName = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -55,7 +54,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(62, 76);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(86, 21);
+            this.label1.Size = new System.Drawing.Size(69, 17);
             this.label1.TabIndex = 0;
             this.label1.Text = "Question:";
             // 
@@ -104,7 +103,7 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(6, 66);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(145, 21);
+            this.label5.Size = new System.Drawing.Size(116, 17);
             this.label5.TabIndex = 9;
             this.label5.Text = "Incorrect answer:";
             // 
@@ -127,7 +126,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(6, 18);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(145, 21);
+            this.label4.Size = new System.Drawing.Size(116, 17);
             this.label4.TabIndex = 7;
             this.label4.Text = "Incorrect answer:";
             // 
@@ -136,7 +135,7 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(6, 114);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(145, 21);
+            this.label6.Size = new System.Drawing.Size(116, 17);
             this.label6.TabIndex = 11;
             this.label6.Text = "Incorrect answer:";
             // 
@@ -159,7 +158,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(62, 212);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(134, 21);
+            this.label3.Size = new System.Drawing.Size(107, 17);
             this.label3.TabIndex = 5;
             this.label3.Text = "Correct answer:";
             // 
@@ -179,22 +178,13 @@
             // 
             // btnNext
             // 
-            this.btnNext.Location = new System.Drawing.Point(233, 397);
+            this.btnNext.Location = new System.Drawing.Point(521, 397);
             this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(167, 41);
+            this.btnNext.Size = new System.Drawing.Size(132, 41);
             this.btnNext.TabIndex = 14;
-            this.btnNext.Text = "Next Question";
+            this.btnNext.Text = "Save";
             this.btnNext.UseVisualStyleBackColor = true;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
-            // 
-            // btnFinish
-            // 
-            this.btnFinish.Location = new System.Drawing.Point(447, 397);
-            this.btnFinish.Name = "btnFinish";
-            this.btnFinish.Size = new System.Drawing.Size(304, 41);
-            this.btnFinish.TabIndex = 15;
-            this.btnFinish.Text = "Finish Test Creation";
-            this.btnFinish.UseVisualStyleBackColor = true;
             // 
             // txtTestName
             // 
@@ -209,13 +199,13 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(62, 35);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(50, 21);
+            this.label7.Size = new System.Drawing.Size(40, 17);
             this.label7.TabIndex = 16;
             this.label7.Text = "Test:";
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(65, 397);
+            this.btnCancel.Location = new System.Drawing.Point(265, 397);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(112, 41);
             this.btnCancel.TabIndex = 18;
@@ -231,7 +221,6 @@
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.txtTestName);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.btnFinish);
             this.Controls.Add(this.btnNext);
             this.Controls.Add(this.grpIncorrectAnswers);
             this.Controls.Add(this.txtCorrectAnswer);
@@ -269,7 +258,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox grpIncorrectAnswers;
         private System.Windows.Forms.Button btnNext;
-        private System.Windows.Forms.Button btnFinish;
         private System.Windows.Forms.TextBox txtTestName;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button btnCancel;

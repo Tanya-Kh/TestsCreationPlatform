@@ -27,7 +27,7 @@ namespace TestCreationPlatform.BLL
             {
                 if (ctrl is ComboBox)
                 {
-                    ctrl.Text = String.Empty;
+                    ((ComboBox)ctrl).SelectedIndex = -1;
                 }
             }
         }

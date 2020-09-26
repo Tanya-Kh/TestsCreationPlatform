@@ -20,7 +20,7 @@ namespace TestCreationPlatform
 
         public QuestionModel Question { get; set; }
 
-        public bool EditMode { get; set; }
+        public string EditMode { get; set; }
 
         public CreateQuestionForm()
         {
@@ -29,23 +29,23 @@ namespace TestCreationPlatform
 
         private void CreateQuestionForm_Load(object sender, EventArgs e)
         {
-            DisplayQuestionInfo();
-            if (EditMode)
+            if (EditMode == "Edit")
             {
                 this.Text = "Edit Question";
-                btnNext.Text = "Save";
-                btnFinish.Visible = false;
+                btnNext.Text = "Update";
             }
+
+            DisplayQuestionInfo();
         }
 
         private void DisplayAnswers()
         {
             AnswerService answer = new AnswerService();
             List<AnswerModel> answers = answer.GetQuestionAnswers(Question);
-            AnswerModel correctAnswer = answers.Where(item => item.IsCorrect == true).FirstOrDefault();
+            AnswerModel correctAnswer = answers.FirstOrDefault(item => item.IsCorrect == true);
             Question.CorrrectAnswer = correctAnswer;
             txtCorrectAnswer.Text = String.Empty;
-           
+
             Helpers.ClearTextBoxes(grpIncorrectAnswers.Controls);
             txtCorrectAnswer.Text = correctAnswer.AnswerText;
 
@@ -60,26 +60,31 @@ namespace TestCreationPlatform
                 Question.IncorrectAnswer3 = incorrectAnswers[2];
             }
         }
- 
+
         private void DisplayQuestionInfo()
         {
             txtTestName.Text = Test.TestName;
-            txtQuestion.Text = Question.QuestionText;
 
-            if (Question.Type == 1)
+            if (EditMode == "Edit")
             {
-                rdoOpen.Checked = true;
+                txtQuestion.Text = Question.QuestionText;
+
+                if (Question.Type == 1)
+                {
+                    rdoOpen.Checked = true;
+                }
+                else
+                {
+                    rdoClosed.Checked = true;
+                }
+                DisplayAnswers();
             }
-            else
-            {
-                rdoClosed.Checked = true;
-            }
-            DisplayAnswers();
         }
 
         private void rdoOpen_CheckedChanged(object sender, EventArgs e)
         {
             grpIncorrectAnswers.Visible = (rdoOpen.Checked) ? false : true;
+            Helpers.ClearTextBoxes(grpIncorrectAnswers.Controls);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -91,12 +96,96 @@ namespace TestCreationPlatform
         {
             switch (btnNext.Text)
             {
-                case "Save":
+                case "Update":
                     UpdateQuestion();
                     UpdateAnswers();
                     break;
                 default:
+                    SaveQuestion();
                     break;
+            }
+        }
+        private bool IsValid()
+        {
+            bool isValid = false;
+
+            List<string> textBoxes = new List<string>() { txtTestName.Text, txtCorrectAnswer.Text };
+            
+            if (rdoClosed.Checked)
+            {
+                textBoxes.Add(txtIncorrect1.Text);
+                textBoxes.Add(txtIncorrect2.Text);
+                textBoxes.Add(txtIncorrect3.Text);
+            }
+            else if (!rdoOpen.Checked)
+            {
+                return isValid;
+            }
+
+            foreach (var item in textBoxes)
+            {
+                isValid = !string.IsNullOrEmpty(item) && textBoxes.Distinct().Count() == textBoxes.Count();
+            }
+
+            return isValid;
+        }
+
+        private void SaveQuestion()
+        {
+            if (IsValid())
+            {
+                QuestionService question = new QuestionService();
+
+                question.Create(new QuestionModel
+                {
+                    TestID = Test.TestID,
+                    QuestionText = txtQuestion.Text,
+                    Type = (rdoClosed.Checked) ? 2 : 1
+                });
+
+                int createdQuestionID = question.GetTestQuestions(Test).OrderByDescending(item => item.QuestionID).First().QuestionID;
+                SaveAnswers(createdQuestionID);
+            }
+            else
+            {
+                MessageBox.Show("ERROR!Please check that all fields are completed and answers are different.");
+            }
+        }
+
+        private void SaveAnswers(int questionID)
+        {
+            AnswerService answer = new AnswerService();
+            answer.Create(new AnswerModel
+            {
+                QuestionID = questionID,
+                AnswerText = txtCorrectAnswer.Text,
+                IsCorrect = true
+            });
+
+            if (rdoClosed.Checked)
+            {
+                SaveIncorrectAnswers(questionID);
+            }
+            MessageBox.Show("The question has been saved!");
+            Helpers.ClearTextBoxes(this.Controls);
+            Helpers.ClearTextBoxes(grpIncorrectAnswers.Controls);
+            DisplayQuestionInfo();
+        }
+
+        private void SaveIncorrectAnswers(int questionID)
+        {
+            AnswerService answer = new AnswerService();
+            foreach (var item in grpIncorrectAnswers.Controls)
+            {
+                if (item is TextBox)
+                {
+                    answer.Create(new AnswerModel
+                    {
+                        QuestionID = questionID,
+                        AnswerText = ((TextBox)item).Text,
+                        IsCorrect = false
+                    });
+                }
             }
         }
 
@@ -106,19 +195,41 @@ namespace TestCreationPlatform
 
             Question.QuestionText = txtQuestion.Text;
             Question.Type = (rdoOpen.Checked) ? 1 : 2;
-//FIX: DELETE INCORRECT ANSWERS IF OPEN QUESTION
-
-            question.Update(Question.QuestionID, Question);
-            MessageBox.Show($"Question has been updated.");
             
-//FIX: UPDATE Questions List on QuestionListForm
-            //QuestionsListForm questionList = new QuestionsListForm();
-            //questionList.ShowQuestions();
+            if (IsValid())
+            {
+                question.Update(Question.QuestionID, Question);
+            }
         }
 
         private void UpdateAnswers()
         {
-            Question.CorrrectAnswer.AnswerText = txtCorrectAnswer.Text;
+            AnswerService answer = new AnswerService();
+
+            if (IsValid())
+            {
+                Question.CorrrectAnswer.AnswerText = txtCorrectAnswer.Text;
+                answer.Update(Question.CorrrectAnswer.AnswerID, Question.CorrrectAnswer);
+                List<AnswerModel> incorrectAnswers = Question.GetAnswers();
+
+                if (incorrectAnswers[0] == null)
+                {
+                    ChangeOpenToClosed(incorrectAnswers);
+                }
+                else
+                {
+                    UpdateIncorrectAnswers(incorrectAnswers);
+                }
+                MessageBox.Show($"Question has been updated.");
+            }
+            else
+            {
+                MessageBox.Show("ERROR!Please check that all fields are completed and answers are different.");
+            }
+        }
+
+        private void UpdateIncorrectAnswers(List<AnswerModel> incorrectAnswers)
+        {
             Question.IncorrectAnswerText.AnswerText = txtIncorrect1.Text;
             Question.IncorrectAnswer2.AnswerText = txtIncorrect2.Text;
             Question.IncorrectAnswer3.AnswerText = txtIncorrect3.Text;
@@ -128,6 +239,22 @@ namespace TestCreationPlatform
             foreach (var item in answers)
             {
                 answer.Update(item.AnswerID, item);
+            }
+        }
+
+        private void ChangeOpenToClosed(List<AnswerModel> incorrectAnswers)
+        {
+            AnswerService answer = new AnswerService();
+            List<string> incorrectList = new List<string> { txtIncorrect1.Text, txtIncorrect2.Text, txtIncorrect3.Text };
+
+            foreach (var item in incorrectList)
+            {
+                answer.Create(new AnswerModel
+                {
+                    QuestionID = Question.QuestionID,
+                    IsCorrect = false,
+                    AnswerText = item
+                });
             }
         }
     }
